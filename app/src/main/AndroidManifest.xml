@@ -5,10 +5,10 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <uses-sdk
-        android:minSdkVersion="19"
-        android:targetSdkVersion="22"
-        tools:overrideLibrary="com.github.johnpersano.supertoasts" />
+    <!--<uses-sdk-->
+        <!--android:minSdkVersion="19"-->
+        <!--android:targetSdkVersion="22"-->
+        <!--tools:overrideLibrary="com.github.johnpersano.supertoasts" />-->
 
     <application
         android:allowBackup="true"
@@ -17,7 +17,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:hardwareAccelerated="true"
             android:label="@string/app_name"

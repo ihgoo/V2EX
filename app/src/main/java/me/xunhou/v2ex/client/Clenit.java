@@ -26,12 +26,13 @@ public class Clenit {
 
     public static ExecutorService mExecutorService;
 
-    public static void main(String[] args) {
+
+    public static void test() {
 
         VApi vApi = getServiceClient();
-        vApi.getTopicsList(new Callback<ForumItemBean>() {
+        vApi.getTopicsList(new Callback<List<ForumItemBean>>() {
             @Override
-            public void success(ForumItemBean forumItemBean, Response response) {
+            public void success(List<ForumItemBean> list, Response response) {
 
             }
 
