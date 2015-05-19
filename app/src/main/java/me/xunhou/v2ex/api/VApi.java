@@ -13,4 +13,7 @@ public interface VApi {
 
     @GET("/api/topics/hot.json")
     void getTopicsList(Callback<ArrayList<ForumItemBean>> callback);
+
+    @GET("/?tab=hot")
+    void getHotList(Callback<String> callback);
 }

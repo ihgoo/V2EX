@@ -2,17 +2,14 @@ package me.xunhou.v2ex.client;
 
 import com.squareup.okhttp.OkHttpClient;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import me.xunhou.v2ex.api.VApi;
-import me.xunhou.v2ex.model.ForumItemBean;
 import me.xunhou.v2ex.persistence.Constant;
 import retrofit.Callback;
-import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.OkClient;
@@ -28,18 +25,31 @@ public class Clenit {
     public static ExecutorService mExecutorService;
 
 
-    public static void test() {
+
+
+    public static void main(String arg[]) {
 
         VApi vApi = getServiceClient();
-        vApi.getTopicsList(new Callback<ArrayList<ForumItemBean>>() {
+//        vApi.getTopicsList(new Callback<ArrayList<ForumItemBean>>() {
+//            @Override
+//            public void success(ArrayList<ForumItemBean> list, Response response) {
+//
+//            }
+//
+//            @Override
+//            public void failure(RetrofitError error) {
+//
+//            }
+//        });
+        vApi.getHotList(new Callback<String>() {
             @Override
-            public void success(ArrayList<ForumItemBean> list, Response response) {
-
+            public void success(String s, Response response) {
+                System.out.print(s);
             }
 
             @Override
             public void failure(RetrofitError error) {
-
+                System.out.print("出错了。。");
             }
         });
     }
@@ -51,11 +61,8 @@ public class Clenit {
         okHttpClient.setConnectTimeout(100, TimeUnit.SECONDS);
 
         RestAdapter.Builder restAdapter = new RestAdapter.Builder();
-        restAdapter.setRequestInterceptor(new RequestInterceptor() {
-            @Override
-            public void intercept(RequestFacade request) {
-            }
-        });
+        ApiHeaders apiHeaders = new ApiHeaders();
+        restAdapter.setRequestInterceptor(apiHeaders);
 
         restAdapter.setEndpoint(API_URL);
         restAdapter.setClient(new OkClient(okHttpClient));
