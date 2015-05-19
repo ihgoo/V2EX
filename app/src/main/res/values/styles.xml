@@ -1,8 +1,91 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="android:Theme.Light.NoTitleBar">
         <!-- Customize your theme here. -->
     </style>
 
+
+    <!-- layout -->
+    <style name="layout" />
+
+    <style name="layout.xy">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="layout.xY">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">fill_parent</item>
+    </style>
+
+    <style name="layout.Xy">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="AnimBottom" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@anim/push_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/push_bottom_out</item>
+    </style>
+
+    <style name="layout.XY">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+    </style>
+
+
+    <!-- windowTitle -->
+    <style name="windowTitle"></style>
+
+    <style name="windowTitle.Wrap" parent="@style/layout.XY">
+        <item name="android:background">@color/white4bg</item>
+    </style>
+
+    <style name="windowTitle.Tx" parent="@style/layout.xy">
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="DialogText">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#6e6e6e</item>
+    </style>
+
+    <style name="windowTitle.btn">
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
+    <style name="windowTitle.btn.left">
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
+    <style name="windowTitle.btn.right" parent="@style/layout.xY">
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
+
+    <style name="windowTitle.tv.right" parent="@style/layout.xY">
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/blue</item>
+        <item name="android:visibility">gone</item>
+    </style>
 </resources>
