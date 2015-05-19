@@ -34,7 +34,7 @@ public class FourmList {
 
             @Override
             public void failure(RetrofitError error) {
-
+                mBus.post("获取列表失败");
             }
         });
     }

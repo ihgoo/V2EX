@@ -15,6 +15,7 @@ import java.util.List;
 import me.xunhou.v2ex.core.FourmList;
 import me.xunhou.v2ex.model.ForumItemBean;
 import me.xunhou.v2ex.utils.BusProvider;
+import me.xunhou.v2ex.utils.ToastUtil;
 
 /**
  * Created by ihgoo on 2015/5/19.
@@ -52,5 +53,10 @@ public class ForumListFragment extends Fragment {
     @Subscribe
     public void getTopicsList(List<ForumItemBean> list){
 
+    }
+
+    @Subscribe
+    public void failure(String string){
+        ToastUtil.showLongTime(getActivity(),string);
     }
 }
