@@ -2,7 +2,7 @@ package me.xunhou.v2ex.core;
 
 import com.squareup.otto.Bus;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import me.xunhou.v2ex.api.VApi;
 import me.xunhou.v2ex.client.Clenit;
@@ -26,9 +26,9 @@ public class FourmList {
     }
 
     public void getTopicsList(){
-        mVApi.getTopicsList(new Callback<List<ForumItemBean>>() {
+        mVApi.getTopicsList(new Callback<ArrayList<ForumItemBean>>() {
             @Override
-            public void success(List<ForumItemBean> list, Response response) {
+            public void success(ArrayList<ForumItemBean> list, Response response) {
                 mBus.post(list);
             }
 

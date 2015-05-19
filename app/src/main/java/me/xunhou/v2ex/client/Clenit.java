@@ -2,6 +2,7 @@ package me.xunhou.v2ex.client;
 
 import com.squareup.okhttp.OkHttpClient;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -30,9 +31,9 @@ public class Clenit {
     public static void test() {
 
         VApi vApi = getServiceClient();
-        vApi.getTopicsList(new Callback<List<ForumItemBean>>() {
+        vApi.getTopicsList(new Callback<ArrayList<ForumItemBean>>() {
             @Override
-            public void success(List<ForumItemBean> list, Response response) {
+            public void success(ArrayList<ForumItemBean> list, Response response) {
 
             }
 

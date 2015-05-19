@@ -10,33 +10,28 @@ public class ForumItemBean {
     @Expose
     private Integer id;
     @Expose
-    private String name;
+    private String title;
     @Expose
     private String url;
     @Expose
-    private String title;
-    @SerializedName("title_alternative")
+    private String content;
+    @SerializedName("content_rendered")
     @Expose
-    private String titleAlternative;
+    private String contentRendered;
     @Expose
-    private Integer topics;
+    private Integer replies;
     @Expose
-    private Integer stars;
+    private Member member;
     @Expose
-    private String header;
-    @Expose
-    private Object footer;
+    private Node node;
     @Expose
     private Integer created;
-    @SerializedName("avatar_mini")
+    @SerializedName("last_modified")
     @Expose
-    private String avatarMini;
-    @SerializedName("avatar_normal")
+    private Integer lastModified;
+    @SerializedName("last_touched")
     @Expose
-    private String avatarNormal;
-    @SerializedName("avatar_large")
-    @Expose
-    private String avatarLarge;
+    private Integer lastTouched;
 
     /**
      *
@@ -54,42 +49,6 @@ public class ForumItemBean {
      */
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    /**
-     *
-     * @return
-     * The name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     *
-     * @param name
-     * The name
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     *
-     * @return
-     * The url
-     */
-    public String getUrl() {
-        return url;
-    }
-
-    /**
-     *
-     * @param url
-     * The url
-     */
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     /**
@@ -113,91 +72,109 @@ public class ForumItemBean {
     /**
      *
      * @return
-     * The titleAlternative
+     * The url
      */
-    public String getTitleAlternative() {
-        return titleAlternative;
+    public String getUrl() {
+        return url;
     }
 
     /**
      *
-     * @param titleAlternative
-     * The title_alternative
+     * @param url
+     * The url
      */
-    public void setTitleAlternative(String titleAlternative) {
-        this.titleAlternative = titleAlternative;
-    }
-
-    /**
-     *
-     * @return
-     * The topics
-     */
-    public Integer getTopics() {
-        return topics;
-    }
-
-    /**
-     *
-     * @param topics
-     * The topics
-     */
-    public void setTopics(Integer topics) {
-        this.topics = topics;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     /**
      *
      * @return
-     * The stars
+     * The content
      */
-    public Integer getStars() {
-        return stars;
+    public String getContent() {
+        return content;
     }
 
     /**
      *
-     * @param stars
-     * The stars
+     * @param content
+     * The content
      */
-    public void setStars(Integer stars) {
-        this.stars = stars;
-    }
-
-    /**
-     *
-     * @return
-     * The header
-     */
-    public String getHeader() {
-        return header;
-    }
-
-    /**
-     *
-     * @param header
-     * The header
-     */
-    public void setHeader(String header) {
-        this.header = header;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     /**
      *
      * @return
-     * The footer
+     * The contentRendered
      */
-    public Object getFooter() {
-        return footer;
+    public String getContentRendered() {
+        return contentRendered;
     }
 
     /**
      *
-     * @param footer
-     * The footer
+     * @param contentRendered
+     * The content_rendered
      */
-    public void setFooter(Object footer) {
-        this.footer = footer;
+    public void setContentRendered(String contentRendered) {
+        this.contentRendered = contentRendered;
+    }
+
+    /**
+     *
+     * @return
+     * The replies
+     */
+    public Integer getReplies() {
+        return replies;
+    }
+
+    /**
+     *
+     * @param replies
+     * The replies
+     */
+    public void setReplies(Integer replies) {
+        this.replies = replies;
+    }
+
+    /**
+     *
+     * @return
+     * The member
+     */
+    public Member getMember() {
+        return member;
+    }
+
+    /**
+     *
+     * @param member
+     * The member
+     */
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
+    /**
+     *
+     * @return
+     * The node
+     */
+    public Node getNode() {
+        return node;
+    }
+
+    /**
+     *
+     * @param node
+     * The node
+     */
+    public void setNode(Node node) {
+        this.node = node;
     }
 
     /**
@@ -221,54 +198,36 @@ public class ForumItemBean {
     /**
      *
      * @return
-     * The avatarMini
+     * The lastModified
      */
-    public String getAvatarMini() {
-        return avatarMini;
+    public Integer getLastModified() {
+        return lastModified;
     }
 
     /**
      *
-     * @param avatarMini
-     * The avatar_mini
+     * @param lastModified
+     * The last_modified
      */
-    public void setAvatarMini(String avatarMini) {
-        this.avatarMini = avatarMini;
-    }
-
-    /**
-     *
-     * @return
-     * The avatarNormal
-     */
-    public String getAvatarNormal() {
-        return avatarNormal;
-    }
-
-    /**
-     *
-     * @param avatarNormal
-     * The avatar_normal
-     */
-    public void setAvatarNormal(String avatarNormal) {
-        this.avatarNormal = avatarNormal;
+    public void setLastModified(Integer lastModified) {
+        this.lastModified = lastModified;
     }
 
     /**
      *
      * @return
-     * The avatarLarge
+     * The lastTouched
      */
-    public String getAvatarLarge() {
-        return avatarLarge;
+    public Integer getLastTouched() {
+        return lastTouched;
     }
 
     /**
      *
-     * @param avatarLarge
-     * The avatar_large
+     * @param lastTouched
+     * The last_touched
      */
-    public void setAvatarLarge(String avatarLarge) {
-        this.avatarLarge = avatarLarge;
+    public void setLastTouched(Integer lastTouched) {
+        this.lastTouched = lastTouched;
     }
 }
