@@ -4,6 +4,18 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include
+        android:id="@+id/titlebar"
+        layout="@layout/window_title"
+        android:layout_width="match_parent"
+        android:layout_height="48dp" />
+
+    <ListView
+        android:id="@+id/lv"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></ListView>
 
 
 </LinearLayout>
