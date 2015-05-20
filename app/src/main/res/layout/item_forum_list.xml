@@ -27,6 +27,7 @@
 
 
             <com.facebook.drawee.view.SimpleDraweeView
+                android:layout_margin="4dp"
                 android:id="@+id/sd_avatar"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
