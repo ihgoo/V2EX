@@ -4,6 +4,7 @@ package me.xunhou.v2ex.ui;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.github.johnpersano.supertoasts.SuperCardToast;
+import com.github.johnpersano.supertoasts.SuperToast;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -26,7 +29,7 @@ import me.xunhou.v2ex.utils.ToastUtil;
 /**
  * Created by ihgoo on 2015/5/19.
  */
-public class ForumListFragment extends Fragment {
+public class ForumListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     @InjectView(R.id.lv)
     ListView lv;
@@ -40,6 +43,8 @@ public class ForumListFragment extends Fragment {
     ImageView rightBtn;
     @InjectView(R.id.right_tv)
     TextView rightTv;
+    @InjectView(R.id.swipe_container)
+    SwipeRefreshLayout swipeContainer;
 
 
     private FourmList mFourmList;
@@ -74,6 +79,7 @@ public class ForumListFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mFourmList.getTopicsList();
+        swipeContainer.setRefreshing(true);
     }
 
     private void initView() {
@@ -81,23 +87,37 @@ public class ForumListFragment extends Fragment {
         lv.setAdapter(forumListAdapter);
         mainTitile.setText("V2EX");
         goBack.setVisibility(View.GONE);
+        swipeContainer.setOnRefreshListener(this);
+        swipeContainer.setColorSchemeColors(R.color.blue);
     }
 
     @Subscribe
     public void getTopicsList(ArrayList<ForumItemBean> list) {
+        swipeContainer.setRefreshing(false);
         mList.clear();
         mList.addAll(list);
         forumListAdapter.notifyDataSetChanged();
+        SuperCardToast superCardToast = new SuperCardToast(getActivity(), SuperToast.Type.STANDARD);
+        superCardToast.setText("            已更新"+list.size()+"条数据             ");
+        superCardToast.setTextSize(14);
+        superCardToast.setBackground(R.color.blue_transparent);
+        superCardToast.show();
     }
 
     @Subscribe
     public void failure(String string) {
         ToastUtil.showLongTime(getActivity(), string);
+        swipeContainer.setRefreshing(false);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.reset(this);
+    }
+
+    @Override
+    public void onRefresh() {
+        mFourmList.getTopicsList();
     }
 }
