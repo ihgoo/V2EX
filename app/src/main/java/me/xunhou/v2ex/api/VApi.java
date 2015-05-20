@@ -1,9 +1,7 @@
 package me.xunhou.v2ex.api;
 
-import java.util.ArrayList;
-
-import me.xunhou.v2ex.model.ForumItemBean;
 import retrofit.Callback;
+import retrofit.client.Response;
 import retrofit.http.GET;
 
 /**
@@ -11,8 +9,8 @@ import retrofit.http.GET;
  */
 public interface VApi {
 
-    @GET("/api/topics/hot.json")
-    void getTopicsList(Callback<ArrayList<ForumItemBean>> callback);
+    @GET("/")
+    void getTopicsList(Callback<Response> callback);
 
     @GET("/?tab=hot")
     void getHotList(Callback<String> callback);

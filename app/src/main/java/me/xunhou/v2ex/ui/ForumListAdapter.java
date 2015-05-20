@@ -53,7 +53,7 @@ public class ForumListAdapter extends BaseAdapter {
         ViewHolder viewHolder = new ViewHolder(view);
         viewHolder.tvName.setText(forumItemBean.getMember().getUsername() + "");
         viewHolder.tvReplay.setText(forumItemBean.getReplies() + "");
-        viewHolder.tvTime.setText("刚刚");
+        viewHolder.tvTime.setText(forumItemBean.getLastTime()+"前");
         viewHolder.tvTitle.setText(forumItemBean.getTitle());
         ImageLoader.getInstance().displayImage(forumItemBean.getMember().getAvatarMini(), viewHolder.sdAvatar);
         return view;

@@ -33,6 +33,16 @@ public class ForumItemBean {
     @Expose
     private Integer lastTouched;
 
+    private String lastTime;
+
+    public String getLastTime() {
+        return lastTime;
+    }
+
+    public void setLastTime(String lastTime) {
+        this.lastTime = lastTime;
+    }
+
     /**
      *
      * @return
