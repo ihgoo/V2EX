@@ -24,16 +24,15 @@ public class FourmList {
     private VApi mVApi;
     private Bus mBus;
 
-    public FourmList(){
+    public FourmList() {
         mVApi = Clenit.getServiceClient();
         mBus = BusProvider.getBus();
     }
 
-    public void getTopicsList(){
-        mVApi.getTopicsList(new Callback<Response>() {
+    public void getTopicsList(int page) {
+        mVApi.getTopicsList(page, new Callback<Response>() {
             @Override
             public void success(Response res, Response response) {
-
                 try {
                     InputStream in = res.getBody().in();
                     String responseString = StringUtil.inputStream2String(in);
@@ -42,9 +41,6 @@ public class FourmList {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
-
-
             }
 
             @Override

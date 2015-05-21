@@ -8,8 +8,10 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import com.github.johnpersano.supertoasts.SuperCardToast;
@@ -29,7 +31,7 @@ import me.xunhou.v2ex.utils.ToastUtil;
 /**
  * Created by ihgoo on 2015/5/19.
  */
-public class ForumListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class ForumListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, AbsListView.OnScrollListener {
 
     @InjectView(R.id.lv)
     ListView lv;
@@ -51,6 +53,11 @@ public class ForumListFragment extends Fragment implements SwipeRefreshLayout.On
     private ForumListAdapter forumListAdapter;
     private ArrayList<ForumItemBean> mList = new ArrayList<>();
 
+    private int page = 0;
+
+    private boolean isLoading = false;
+
+    private  boolean isRefresh = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -78,7 +85,7 @@ public class ForumListFragment extends Fragment implements SwipeRefreshLayout.On
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mFourmList.getTopicsList();
+        mFourmList.getTopicsList(page);
         swipeContainer.setRefreshing(true);
     }
 
@@ -89,24 +96,36 @@ public class ForumListFragment extends Fragment implements SwipeRefreshLayout.On
         goBack.setVisibility(View.GONE);
         swipeContainer.setOnRefreshListener(this);
         swipeContainer.setColorSchemeColors(R.color.blue);
+
+        lv.setOnScrollListener(this);
     }
 
     @Subscribe
     public void getTopicsList(ArrayList<ForumItemBean> list) {
-        swipeContainer.setRefreshing(false);
-        mList.clear();
-        mList.addAll(list);
-        forumListAdapter.notifyDataSetChanged();
-        SuperCardToast superCardToast = new SuperCardToast(getActivity(), SuperToast.Type.STANDARD);
-        superCardToast.setText("            已更新"+list.size()+"条数据             ");
-        superCardToast.setTextSize(14);
-        superCardToast.setBackground(R.color.blue_transparent);
-        superCardToast.show();
+        getFourmList(list,isRefresh);
     }
 
     @Subscribe
     public void failure(String string) {
         ToastUtil.showLongTime(getActivity(), string);
+        swipeContainer.setRefreshing(false);
+    }
+
+
+    private void getFourmList(ArrayList<ForumItemBean> list,boolean isReload){
+        if (isReload){
+            mList.clear();
+            isRefresh = false;
+        }
+
+        mList.addAll(list);
+        forumListAdapter.notifyDataSetChanged();
+        SuperCardToast superCardToast = new SuperCardToast(getActivity(), SuperToast.Type.STANDARD);
+        superCardToast.setText("已更新" + list.size() + "条数据");
+        superCardToast.setTextSize(14);
+        superCardToast.setBackground(R.color.blue_transparent);
+        superCardToast.show();
+        isLoading = false;
         swipeContainer.setRefreshing(false);
     }
 
@@ -118,6 +137,29 @@ public class ForumListFragment extends Fragment implements SwipeRefreshLayout.On
 
     @Override
     public void onRefresh() {
-        mFourmList.getTopicsList();
+        isRefresh = true;
+        mFourmList.getTopicsList(page);
+    }
+
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+        switch (scrollState) {
+            case NumberPicker.OnScrollListener.SCROLL_STATE_IDLE:
+                if (view.getLastVisiblePosition() == (view.getCount() - 1)) {
+
+                    if (!isLoading) {
+                        page++;
+                        isLoading = true;
+                        mFourmList.getTopicsList(page);
+                    }
+
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void onScroll(AbsListView absListView, int i, int i1, int i2) {
+
     }
 }
