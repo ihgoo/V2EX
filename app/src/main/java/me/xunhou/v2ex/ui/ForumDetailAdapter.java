@@ -16,6 +16,7 @@ import butterknife.InjectView;
 import me.xunhou.v2ex.R;
 import me.xunhou.v2ex.model.ReplyBean;
 import me.xunhou.v2ex.utils.ImageLoader;
+import me.xunhou.v2ex.utils.StringUtil;
 
 /**
  * Created by ihgoo on 2015/5/21.
@@ -55,7 +56,7 @@ public class ForumDetailAdapter extends BaseAdapter {
         ViewHolder viewHolder = new ViewHolder(view);
         viewHolder.tvName.setText(replyBean.getMember().getUsername() + "");
 //        viewHolder.tvTime.setText(forumItemBean.getLastTime() + "前");
-        viewHolder.tvTitle.setText(replyBean.getContent());
+        viewHolder.tvTitle.setText(StringUtil.delHTMLTag(replyBean.getContent()));
         ImageLoader.getInstance().displayImage(replyBean.getMember().getAvatarMini(), viewHolder.sdAvatar);
         return view;
     }
