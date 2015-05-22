@@ -5,10 +5,11 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <!--<uses-sdk-->
-        <!--android:minSdkVersion="19"-->
-        <!--android:targetSdkVersion="22"-->
-        <!--tools:overrideLibrary="com.github.johnpersano.supertoasts" />-->
+
+    <uses-sdk
+        android:minSdkVersion="19"
+        android:targetSdkVersion="22"
+        tools:overrideLibrary="com.github.johnpersano.supertoasts" />
 
     <application
         android:name=".app.BaseApplication"

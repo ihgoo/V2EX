@@ -14,7 +14,8 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import me.xunhou.v2ex.R;
-import me.xunhou.v2ex.model.TopicBean;
+import me.xunhou.v2ex.model.ReplyBean;
+import me.xunhou.v2ex.utils.ImageLoader;
 
 /**
  * Created by ihgoo on 2015/5/21.
@@ -24,9 +25,9 @@ public class ForumDetailAdapter extends BaseAdapter {
 
     private Context mContext;
 
-    private List<TopicBean> mList;
+    private List<ReplyBean> mList;
 
-    public ForumDetailAdapter(Context context, List<TopicBean> list) {
+    public ForumDetailAdapter(Context context, List<ReplyBean> list) {
         mContext = context;
         mList = list;
     }
@@ -48,13 +49,14 @@ public class ForumDetailAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
-        TopicBean topicBean = mList.get(position);
+        ReplyBean replyBean = mList.get(position);
+
         view = View.inflate(mContext, R.layout.item_forum_detail_list, null);
         ViewHolder viewHolder = new ViewHolder(view);
-//        viewHolder.tvName.setText(topicBean. + "");
+        viewHolder.tvName.setText(replyBean.getMember().getUsername() + "");
 //        viewHolder.tvTime.setText(forumItemBean.getLastTime() + "前");
-        viewHolder.tvTitle.setText(topicBean.getContent());
-//        ImageLoader.getInstance().displayImage(topicBean.getMember().getAvatarMini(), viewHolder.sdAvatar);
+        viewHolder.tvTitle.setText(replyBean.getContent());
+        ImageLoader.getInstance().displayImage(replyBean.getMember().getAvatarMini(), viewHolder.sdAvatar);
         return view;
     }
 

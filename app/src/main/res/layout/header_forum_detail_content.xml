@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="16sp"
+        android:background="#fff"
         android:text="《Chappie》超能查派，这部片不错"
         android:gravity="center_horizontal"/>
 

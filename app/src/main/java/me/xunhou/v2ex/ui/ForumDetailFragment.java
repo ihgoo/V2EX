@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -19,6 +20,7 @@ import butterknife.OnClick;
 import me.xunhou.v2ex.R;
 import me.xunhou.v2ex.core.ForumDetail;
 import me.xunhou.v2ex.model.ForumItemBean;
+import me.xunhou.v2ex.model.ReplyBean;
 import me.xunhou.v2ex.model.TopicBean;
 import me.xunhou.v2ex.persistence.IntentConstant;
 import me.xunhou.v2ex.utils.BusProvider;
@@ -44,7 +46,7 @@ public class ForumDetailFragment extends BaseFragment {
 
     TextView title;
     ForumDetail forumDetail;
-    ArrayList<TopicBean> mList  = new ArrayList<TopicBean>();
+    List<ReplyBean> mList  = new ArrayList<ReplyBean>();
     ForumDetailAdapter forumDetailAdapter;
 
     @Override
@@ -88,7 +90,7 @@ public class ForumDetailFragment extends BaseFragment {
 
     @Subscribe
     public void getForumDetail(TopicBean topicBean) {
-        mList.add(topicBean);
+        mList.addAll(topicBean.getReplyBeanList());
         forumDetailAdapter.notifyDataSetChanged();
     }
 

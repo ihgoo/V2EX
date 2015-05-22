@@ -25,6 +25,10 @@ public class ImageLoader {
     }
 
     public void displayImage(String string, SimpleDraweeView simpleDraweeView) {
+
+        if (null==string){
+            return;
+        }
         if (!string.startsWith("http:")) {
             string = "http:" + string;
         }
