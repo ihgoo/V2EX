@@ -3,6 +3,8 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="android:Theme.Light.NoTitleBar">
         <!-- Customize your theme here. -->
+
+
     </style>
 
 
@@ -88,4 +90,13 @@
         <item name="android:textColor">@color/blue</item>
         <item name="android:visibility">gone</item>
     </style>
+
+
+
+
+
+
+
+
+
 </resources>
