@@ -14,7 +14,7 @@ public final class BusProvider {
 
     // The singleton of the Bus instance which can be used from
     // any thread in the app.
-    private static final Bus BUS = new Bus(){
+    private static final Bus BUS = new Bus() {
 
         private final Handler mainThread = new Handler(Looper.getMainLooper());
 
@@ -23,8 +23,7 @@ public final class BusProvider {
 
             if (Looper.myLooper() == Looper.getMainLooper()) {
                 super.post(event);
-            }
-            else {
+            } else {
                 mainThread.post(new Runnable() {
                     @Override
                     public void run() {
@@ -34,6 +33,27 @@ public final class BusProvider {
             }
         }
     };
+
+
+    public static boolean isBusRegister() {
+        return registerObject != null ? true : false;
+    }
+
+    private static Object registerObject;
+
+    public static void register(Object object) {
+        if (!isBusRegister()) {
+            getBus().register(object);
+            registerObject = object;
+        }
+    }
+
+    public static void unregister(Object object) {
+        if (isBusRegister()) {
+            getBus().unregister(object);
+            registerObject = null;
+        }
+    }
 
     /**
      * Returns a singleton instance for obtaining the event bus over

@@ -2,13 +2,17 @@ package me.xunhou.v2ex.client;
 
 import com.squareup.okhttp.OkHttpClient;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import me.xunhou.v2ex.api.VApi;
+import me.xunhou.v2ex.paser.PaserFourmDetail;
 import me.xunhou.v2ex.persistence.Constant;
+import me.xunhou.v2ex.utils.StringUtil;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -25,31 +29,24 @@ public class Clenit {
     public static ExecutorService mExecutorService;
 
 
-
-
     public static void main(String arg[]) {
 
         VApi vApi = getServiceClient();
-//        vApi.getTopicsList(new Callback<ArrayList<ForumItemBean>>() {
-//            @Override
-//            public void success(ArrayList<ForumItemBean> list, Response response) {
-//
-//            }
-//
-//            @Override
-//            public void failure(RetrofitError error) {
-//
-//            }
-//        });
-        vApi.getHotList(new Callback<String>() {
+        vApi.getForumDetail("192495",new Callback<Response>() {
             @Override
-            public void success(String s, Response response) {
-                System.out.print(s);
+            public void success(Response res, Response response) {
+                try {
+                    InputStream in = res.getBody().in();
+                    String responseString = StringUtil.inputStream2String(in);
+                    PaserFourmDetail.paserFourmDetail(responseString);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
             public void failure(RetrofitError error) {
-                System.out.print("出错了。。");
+
             }
         });
     }

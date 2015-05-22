@@ -1,8 +1,10 @@
 package me.xunhou.v2ex.api;
 
+import me.xunhou.v2ex.model.TopicBean;
 import retrofit.Callback;
 import retrofit.client.Response;
 import retrofit.http.GET;
+import retrofit.http.Path;
 import retrofit.http.Query;
 
 /**
@@ -11,8 +13,16 @@ import retrofit.http.Query;
 public interface VApi {
 
     @GET("/recent")
-    void getTopicsList(@Query("p") int page,Callback<Response> callback);
+    void getTopicsList(@Query("p") int page, Callback<Response> callback);
 
-    @GET("/?tab=hot")
-    void getHotList(Callback<String> callback);
+
+    @GET("/t/{tid}")
+    void getForumDetail(@Path("tid") String tid, Callback<Response> callback);
+
+
+    @GET("/api/topics/show.json?id={tid}")
+    void getForumDetailByApi(@Path("tid") String tid, Callback<TopicBean> callback);
+
+
+
 }

@@ -14,19 +14,19 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import me.xunhou.v2ex.R;
-import me.xunhou.v2ex.model.ForumItemBean;
-import me.xunhou.v2ex.utils.ImageLoader;
+import me.xunhou.v2ex.model.TopicBean;
 
 /**
- * Created by ihgoo on 2015/5/19.
+ * Created by ihgoo on 2015/5/21.
  */
-public class ForumListAdapter extends BaseAdapter {
+public class ForumDetailAdapter extends BaseAdapter {
+
 
     private Context mContext;
 
-    private List<ForumItemBean> mList;
+    private List<TopicBean> mList;
 
-    public ForumListAdapter(Context context, List<ForumItemBean> list) {
+    public ForumDetailAdapter(Context context, List<TopicBean> list) {
         mContext = context;
         mList = list;
     }
@@ -37,8 +37,8 @@ public class ForumListAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
-        return mList.get(position);
+    public Object getItem(int i) {
+        return null;
     }
 
     @Override
@@ -48,27 +48,19 @@ public class ForumListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
-        ForumItemBean forumItemBean = mList.get(position);
-        view = View.inflate(mContext, R.layout.item_forum_list, null);
+        TopicBean topicBean = mList.get(position);
+        view = View.inflate(mContext, R.layout.item_forum_detail_list, null);
         ViewHolder viewHolder = new ViewHolder(view);
-        viewHolder.tvName.setText(forumItemBean.getMember().getUsername() + "");
-        viewHolder.tvReplay.setText(forumItemBean.getReplies() + "");
-        viewHolder.tvTime.setText(forumItemBean.getLastTime()+"前");
-        viewHolder.tvTitle.setText(forumItemBean.getTitle());
-        ImageLoader.getInstance().displayImage(forumItemBean.getMember().getAvatarMini(), viewHolder.sdAvatar);
-
-        viewHolder.tvTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
-
+//        viewHolder.tvName.setText(topicBean. + "");
+//        viewHolder.tvTime.setText(forumItemBean.getLastTime() + "前");
+        viewHolder.tvTitle.setText(topicBean.getContent());
+//        ImageLoader.getInstance().displayImage(topicBean.getMember().getAvatarMini(), viewHolder.sdAvatar);
         return view;
     }
 
 
     /**
-     * This class contains all butterknife-injected Views & Layouts from layout file 'item_forum_list.xml'
+     * This class contains all butterknife-injected Views & Layouts from layout file 'item_forum_detail_list.xml'
      * for easy to all layout elements.
      *
      * @author ButterKnifeZelezny, plugin for Android Studio by Avast Developers (http://github.com/avast)
@@ -78,10 +70,6 @@ public class ForumListAdapter extends BaseAdapter {
         SimpleDraweeView sdAvatar;
         @InjectView(R.id.tv_name)
         TextView tvName;
-        @InjectView(R.id.sd_has_image)
-        SimpleDraweeView sdHasImage;
-        @InjectView(R.id.tv_replay)
-        TextView tvReplay;
         @InjectView(R.id.tv_time)
         TextView tvTime;
         @InjectView(R.id.tv_title)

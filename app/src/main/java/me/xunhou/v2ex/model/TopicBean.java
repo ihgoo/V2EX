@@ -3,12 +3,10 @@ package me.xunhou.v2ex.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
-
 /**
- * Created by ihgoo on 2015/5/18.
+ * Created by ihgoo on 2015/5/21.
  */
-public class ForumItemBean implements Serializable {
+public class TopicBean {
     @Expose
     private Integer id;
     @Expose
@@ -34,16 +32,6 @@ public class ForumItemBean implements Serializable {
     @SerializedName("last_touched")
     @Expose
     private Integer lastTouched;
-
-    private String lastTime;
-
-    public String getLastTime() {
-        return lastTime;
-    }
-
-    public void setLastTime(String lastTime) {
-        this.lastTime = lastTime;
-    }
 
     /**
      *
