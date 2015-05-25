@@ -78,8 +78,6 @@ public class ForumListAdapter extends BaseAdapter {
         SimpleDraweeView sdAvatar;
         @InjectView(R.id.tv_name)
         TextView tvName;
-        @InjectView(R.id.sd_has_image)
-        SimpleDraweeView sdHasImage;
         @InjectView(R.id.tv_replay)
         TextView tvReplay;
         @InjectView(R.id.tv_time)

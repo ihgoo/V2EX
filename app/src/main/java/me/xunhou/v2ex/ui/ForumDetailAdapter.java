@@ -55,7 +55,7 @@ public class ForumDetailAdapter extends BaseAdapter {
         view = View.inflate(mContext, R.layout.item_forum_detail_list, null);
         ViewHolder viewHolder = new ViewHolder(view);
         viewHolder.tvName.setText(replyBean.getMember().getUsername() + "");
-//        viewHolder.tvTime.setText(forumItemBean.getLastTime() + "前");
+        viewHolder.tvTime.setText((position+1)+"#");
         viewHolder.tvTitle.setText(StringUtil.delHTMLTag(replyBean.getContent()));
         ImageLoader.getInstance().displayImage(replyBean.getMember().getAvatarMini(), viewHolder.sdAvatar);
         return view;

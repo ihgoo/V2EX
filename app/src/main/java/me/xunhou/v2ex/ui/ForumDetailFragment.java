@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -16,7 +15,6 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.OnClick;
 import me.xunhou.v2ex.R;
 import me.xunhou.v2ex.core.ForumDetail;
 import me.xunhou.v2ex.model.ForumItemBean;
@@ -31,29 +29,20 @@ import me.xunhou.v2ex.utils.ToastUtil;
  */
 public class ForumDetailFragment extends BaseFragment {
 
-    @InjectView(R.id.goBack)
-    ImageView goBack;
-    @InjectView(R.id.menuButton)
-    ImageView menuButton;
-    @InjectView(R.id.mainTitile)
-    TextView mainTitile;
-    @InjectView(R.id.right_btn)
-    ImageView rightBtn;
-    @InjectView(R.id.right_tv)
-    TextView rightTv;
-    @InjectView(R.id.lv)
-    ListView lv;
 
     TextView title;
     ForumDetail forumDetail;
-    List<ReplyBean> mList  = new ArrayList<ReplyBean>();
+    List<ReplyBean> mList = new ArrayList<ReplyBean>();
     ForumDetailAdapter forumDetailAdapter;
+
+
+    @InjectView(R.id.lv)
+    ListView lv;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
 
 
     @Override
@@ -101,8 +90,6 @@ public class ForumDetailFragment extends BaseFragment {
 
 
     private void initView() {
-        mainTitile.setText("详情");
-        goBack.setVisibility(View.VISIBLE);
         View header = View.inflate(mContext, R.layout.header_forum_detail_content, null);
         title = (TextView) header.findViewById(R.id.tv_title);
         lv.addHeaderView(header);
@@ -110,11 +97,6 @@ public class ForumDetailFragment extends BaseFragment {
         lv.setAdapter(forumDetailAdapter);
     }
 
-    @OnClick(R.id.goBack)
-    void finish(View v){
-        getFragmentManager().popBackStack();
-        ((MainActivity)getActivity()).popFragment(true);
-    }
 
     @Override
     public void onDestroyView() {

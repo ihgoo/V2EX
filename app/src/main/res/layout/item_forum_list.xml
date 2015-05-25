@@ -46,10 +46,11 @@
                 android:layout_height="0dp"
                 android:layout_weight="2" />
 
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/sd_has_image"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/tapatalk_topic_icon"
                  />
 
             <TextView

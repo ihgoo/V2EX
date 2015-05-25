@@ -18,7 +18,7 @@
     <TextView
         android:id="@+id/mainTitile"
         style="@style/windowTitle.Tx"
-        android:layout_marginLeft="50dip"
+        android:layout_marginLeft="80dip"
         android:gravity="center"/>
 
     <ImageView

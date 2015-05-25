@@ -9,10 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.NumberPicker;
-import android.widget.TextView;
 
 import com.github.johnpersano.supertoasts.SuperCardToast;
 import com.github.johnpersano.supertoasts.SuperToast;
@@ -34,22 +33,13 @@ import me.xunhou.v2ex.utils.ToastUtil;
  */
 public class ForumListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, AbsListView.OnScrollListener, AdapterView.OnItemClickListener {
 
+
     @InjectView(R.id.lv)
     ListView lv;
-    @InjectView(R.id.goBack)
-    ImageView goBack;
-    @InjectView(R.id.menuButton)
-    ImageView menuButton;
-    @InjectView(R.id.mainTitile)
-    TextView mainTitile;
-    @InjectView(R.id.right_btn)
-    ImageView rightBtn;
-    @InjectView(R.id.right_tv)
-    TextView rightTv;
     @InjectView(R.id.swipe_container)
     SwipeRefreshLayout swipeContainer;
-
-
+    @InjectView(R.id.card_container)
+    LinearLayout cardContainer;
     private FourmList mFourmList;
     private ForumListAdapter forumListAdapter;
     private ArrayList<ForumItemBean> mList = new ArrayList<>();
@@ -69,7 +59,6 @@ public class ForumListFragment extends BaseFragment implements SwipeRefreshLayou
     @Override
     public void onDestroy() {
         super.onDestroy();
-
     }
 
 
@@ -88,7 +77,7 @@ public class ForumListFragment extends BaseFragment implements SwipeRefreshLayou
         super.onActivityCreated(savedInstanceState);
         BusProvider.register(this);
         mFourmList = new FourmList();
-        if (mList.size()==0){
+        if (mList.size() == 0) {
             mFourmList.getTopicsList(page);
             swipeContainer.setRefreshing(true);
         }
@@ -97,10 +86,8 @@ public class ForumListFragment extends BaseFragment implements SwipeRefreshLayou
     private void initView() {
         forumListAdapter = new ForumListAdapter(getActivity(), mList);
         lv.setAdapter(forumListAdapter);
-        mainTitile.setText("V2EX");
-        goBack.setVisibility(View.GONE);
         swipeContainer.setOnRefreshListener(this);
-        swipeContainer.setColorSchemeColors(R.color.blue);
+        swipeContainer.setColorSchemeResources(R.color.blue);
         lv.setOnScrollListener(this);
         lv.setOnItemClickListener(this);
     }
@@ -178,7 +165,7 @@ public class ForumListFragment extends BaseFragment implements SwipeRefreshLayou
         bundle.putSerializable(IntentConstant.SerializableitemBean, itemBean);
         forumDetailFragment.setArguments(bundle);
         getFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, forumDetailFragment, ForumDetailFragment.class.getName())
+                .replace(R.id.main_frame_container, forumDetailFragment, ForumDetailFragment.class.getName())
                 .addToBackStack(ForumDetailFragment.class.getName())
                 .commit();
     }
