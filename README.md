@@ -10,3 +10,6 @@ A simple Android client for V2EX.
 - butterknife
 - supertoasts
 - retrofit
+
+## Preview
+![enter image description here](http://ihgoo.qiniudn.com/1.gif)
