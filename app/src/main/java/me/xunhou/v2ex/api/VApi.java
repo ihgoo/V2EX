@@ -18,10 +18,8 @@ public interface VApi {
     @GET("/recent")
     void getTopicsList(@Query("p") int page, Callback<Response> callback);
 
-
     @GET("/t/{tid}")
     void getForumDetail(@Path("tid") String tid, Callback<Response> callback);
-
 
     @GET("/api/topics/show.json?id={tid}")
     void getForumDetailByApi(@Path("tid") String tid, Callback<TopicBean> callback);

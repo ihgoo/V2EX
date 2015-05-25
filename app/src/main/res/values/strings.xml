@@ -6,8 +6,8 @@
     <string name="title_drawer_search">搜索</string>
     <string name="title_drawer_mypost">我的帖子</string>
     <string name="title_drawer_myreply">我的回复</string>
-    <string name="title_drawer_favorites">我的收藏</string>
-    <string name="title_drawer_sms">短消息</string>
+    <string name="title_drawer_subject_favorites">我的收藏</string>
+    <string name="title_drawer_node_favorites">短消息</string>
     <string name="title_drawer_notify">帖子消息</string>
     <string name="title_drawer_newpost">发表新帖</string>
     <string name="title_drawer_setting">设置</string>

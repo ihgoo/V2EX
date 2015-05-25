@@ -29,7 +29,7 @@ public class ForumDetail extends CancelQueue{
     }
 
     public void getForumDetail(String tid) {
-        mVApi.getForumDetail(tid, new Callback<Response>() {
+        mVApi.getForumDetail(tid,new Callback<Response>() {
             @Override
             public void success(Response res, Response response) {
                 try {
