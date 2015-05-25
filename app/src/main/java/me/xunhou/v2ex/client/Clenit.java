@@ -2,22 +2,16 @@ package me.xunhou.v2ex.client;
 
 import com.squareup.okhttp.OkHttpClient;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import me.xunhou.v2ex.api.VApi;
-import me.xunhou.v2ex.paser.PaserFourmDetail;
+import me.xunhou.v2ex.core.Login;
 import me.xunhou.v2ex.persistence.Constant;
-import me.xunhou.v2ex.utils.StringUtil;
-import retrofit.Callback;
 import retrofit.RestAdapter;
-import retrofit.RetrofitError;
 import retrofit.client.OkClient;
-import retrofit.client.Response;
 
 /**
  * Created by ihgoo on 2015/5/18.
@@ -32,23 +26,56 @@ public class Clenit {
     public static void main(String arg[]) {
 
         VApi vApi = getServiceClient();
-        vApi.getForumDetail("192495",new Callback<Response>() {
-            @Override
-            public void success(Response res, Response response) {
-                try {
-                    InputStream in = res.getBody().in();
-                    String responseString = StringUtil.inputStream2String(in);
-                    PaserFourmDetail.paserFourmDetail(responseString);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+//        vApi.getForumDetail("192495",new Callback<Response>() {
+//            @Override
+//            public void success(Response res, Response response) {
+//                try {
+//                    InputStream in = res.getBody().in();
+//                    String responseString = StringUtil.inputStream2String(in);
+//                    PaserFourmDetail.paserFourmDetail(responseString);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @Override
+//            public void failure(RetrofitError error) {
+//
+//            }
+//        });
 
-            @Override
-            public void failure(RetrofitError error) {
 
-            }
-        });
+        Login login = new Login();
+        login.getOnce();
+
+
+
+//        vApi.getOnce(new Callback<Response>() {
+//            @Override
+//            public void success(Response res, Response response) {
+//                try {
+//                    InputStream in = res.getBody().in();
+//                    String responseString = StringUtil.inputStream2String(in);
+//                    String once = PaserLogin.paserOnce(responseString);
+//                    //next=%2F&u=aa&once=59483&p=aa
+//                    String once = PaserLogin.paserOnce(responseString);
+//                    Login.login("ihgoo","HUKAIJUN123",once);
+//
+//
+//
+//
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @Override
+//            public void failure(RetrofitError error) {
+//
+//            }
+//        });
+
+
     }
 
 
