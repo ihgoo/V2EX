@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import me.xunhou.v2ex.api.VApi;
 import me.xunhou.v2ex.client.Clenit;
 import me.xunhou.v2ex.model.ForumItemBean;
-import me.xunhou.v2ex.paser.PaserFourmList;
 import me.xunhou.v2ex.utils.BusProvider;
 import me.xunhou.v2ex.utils.StringUtil;
+import me.xunhou.v2ex.utils.V2EXPaser;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -36,7 +36,7 @@ public class FourmList extends CancelQueue {
                 try {
                     InputStream in = res.getBody().in();
                     String responseString = StringUtil.inputStream2String(in);
-                    ArrayList<ForumItemBean> list = PaserFourmList.paser2ForumItem(responseString);
+                    ArrayList<ForumItemBean> list = V2EXPaser.paser2ForumItem(responseString);
                     mBus.post(list);
                 } catch (IOException e) {
                     e.printStackTrace();

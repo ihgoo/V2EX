@@ -8,9 +8,9 @@ import java.io.InputStream;
 import me.xunhou.v2ex.api.VApi;
 import me.xunhou.v2ex.client.Clenit;
 import me.xunhou.v2ex.model.TopicBean;
-import me.xunhou.v2ex.paser.PaserFourmDetail;
 import me.xunhou.v2ex.utils.BusProvider;
 import me.xunhou.v2ex.utils.StringUtil;
+import me.xunhou.v2ex.utils.V2EXPaser;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -35,7 +35,7 @@ public class ForumDetail extends CancelQueue{
                 try {
                     InputStream in = res.getBody().in();
                     String responseString = StringUtil.inputStream2String(in);
-                    TopicBean topicBean = PaserFourmDetail.paserFourmDetail(responseString);
+                    TopicBean topicBean = V2EXPaser.paserFourmDetail(responseString);
                     mBus.post(topicBean);
                 } catch (IOException e) {
                     e.printStackTrace();
