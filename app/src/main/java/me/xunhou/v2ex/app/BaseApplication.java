@@ -9,6 +9,8 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 
 import java.lang.ref.WeakReference;
 
+import me.xunhou.v2ex.model.V2EXSettingHelper;
+
 /**
  * Created by ihgoo on 2015/1/19.
  */
@@ -21,6 +23,8 @@ public class BaseApplication extends Application {
         instance = getApplicationContext();
         Fresco.initialize(this);
         super.onCreate();
+        V2EXSettingHelper.getInstance().init(this);
+        CrashHandler.getInstance().init(this);
     }
 
 

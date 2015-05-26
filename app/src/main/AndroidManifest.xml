@@ -11,7 +11,7 @@
     <uses-sdk
         android:minSdkVersion="19"
         android:targetSdkVersion="22"
-        tools:overrideLibrary="com.github.johnpersano.supertoasts" />
+        tools:overrideLibrary="com.github.johnpersano.supertoasts,com.kenumir.materialsettings" />
 
     <application
         android:name=".app.BaseApplication"
@@ -30,6 +30,14 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+
+        <activity
+            android:name=".ui.SettingActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@style/MaterialSettingsTheme">
         </activity>
 
 

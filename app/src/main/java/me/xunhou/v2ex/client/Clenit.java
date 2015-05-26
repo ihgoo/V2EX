@@ -8,7 +8,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import me.xunhou.v2ex.api.VApi;
-import me.xunhou.v2ex.core.Login;
 import me.xunhou.v2ex.persistence.Constant;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
@@ -45,8 +44,8 @@ public class Clenit {
 //        });
 
 
-        Login login = new Login();
-        login.getOnce();
+//        Login login = new Login();
+//        login.getOnce();
 
 
 

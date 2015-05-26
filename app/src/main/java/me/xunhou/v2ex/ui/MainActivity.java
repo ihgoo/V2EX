@@ -3,6 +3,7 @@ package me.xunhou.v2ex.ui;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -64,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 .withSelectionListEnabled(false)
                 .addProfiles(new ProfileDrawerItem()
                         .withEmail("xunhou")
-                        .withIcon(""))
+                        .withIcon("https://cdn.v2ex.co/gravatar/01edd61225f7b051d8874a86dcee87de?s=48&d=retro"))
                 .build();
 
 
@@ -173,7 +174,9 @@ public class MainActivity extends AppCompatActivity {
     private class DrawerItemClickListener implements Drawer.OnDrawerItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l, IDrawerItem iDrawerItem) {
-
+            Intent intent = new Intent();
+            intent.setClass(MainActivity.this,SettingActivity.class);
+            startActivity(intent);
         }
     }
 }

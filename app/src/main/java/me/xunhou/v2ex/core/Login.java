@@ -1,5 +1,8 @@
 package me.xunhou.v2ex.core;
 
+import android.os.Handler;
+import android.util.Log;
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -18,11 +21,11 @@ import retrofit.client.Response;
 public class Login {
 
     private VApi api ;
-//    private Bus mBus;
+    private Handler mHandler;
 
-    public Login(){
+    public Login(Handler handler){
         api = Clenit.getServiceClient();
-//        mBus = BusProvider.getBus();
+        mHandler = handler;
     }
 
     public void getOnce(){
@@ -33,7 +36,9 @@ public class Login {
                     InputStream in = res.getBody().in();
                     String responseString = StringUtil.inputStream2String(in);
                     String once = V2EXPaser.paserOnce(responseString);
-                    login("ihgoo","HUKAIJUN123",once);
+                    mHandler.obtainMessage(0,"");
+
+                    login("ihgoo", "HUKAIJUN123", once);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -59,8 +64,7 @@ public class Login {
                         if (header.getName().equalsIgnoreCase("set-cookie")
                                 && header.getValue().toLowerCase().contains("PB3_SESSION") ){
 //                            saveSessionCookie(header.getValue());
-
-
+                            Log.e("","session is "+header.getValue());
                             break;
                         }
                     }
