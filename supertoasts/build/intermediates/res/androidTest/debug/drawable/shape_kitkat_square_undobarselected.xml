@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape 
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <solid 
+        android:color="#55FFFFFF" />
+
+</shape><!-- From: file:/D:/Project/V2EX/supertoasts/res/drawable/shape_kitkat_square_undobarselected.xml --><!-- From: file:/D:/Project/V2EX/supertoasts/build/intermediates/bundles/debug/res/drawable/shape_kitkat_square_undobarselected.xml -->

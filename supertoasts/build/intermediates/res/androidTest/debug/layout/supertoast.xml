@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/root_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="@dimen/toast_hover"
+        style="@style/DefaultRootLayout">
+
+    <TextView
+            android:id="@+id/message_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            style="@style/DefaultText"/>
+
+</LinearLayout><!-- From: file:/D:/Project/V2EX/supertoasts/res/layout/supertoast.xml --><!-- From: file:/D:/Project/V2EX/supertoasts/build/intermediates/bundles/debug/res/layout/supertoast.xml -->

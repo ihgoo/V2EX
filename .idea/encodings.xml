@@ -2,9 +2,7 @@
 <project version="4">
   <component name="Encoding" native2AsciiForPropertiesFiles="true" defaultCharsetForPropertiesFiles="UTF-8">
     <file url="file://$PROJECT_DIR$/app/build.gradle" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/libs/jsoup-1.8.2.jar" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/me/xunhou/v2ex/app/BaseApplication.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/me/xunhou/v2ex/paser/PaserFourmList.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/me/xunhou/v2ex/utils/BusProvider.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/me/xunhou/v2ex/utils/ToastUtil.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/anim/push_bottom_in.xml" charset="GBK" />
@@ -19,6 +17,7 @@
     <file url="file://$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/ic_comm_goback_normal.png" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/ic_comm_goback_press.png" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/materialSettings" charset="GBK" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

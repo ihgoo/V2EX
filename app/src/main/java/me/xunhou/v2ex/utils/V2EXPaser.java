@@ -72,7 +72,14 @@ public class V2EXPaser {
     public static TopicBean paserFourmDetail(String string) {
         Document document = Jsoup.parse(string);
         String title = document.select("title").first().html();
-        String topic_content = document.getElementsByClass("topic_content").first().html();
+        String topic_content ="RT";
+
+        try{
+            // try catch -> The topic usually has not topic_content class,so i catch it;
+            topic_content = document.getElementsByClass("topic_content").first().html();
+        }catch (Exception e){
+        }
+
         String contentAvatar = document.select(".avatar").first().attr("src");
         String author = document.select(".gray > [href]").first().html();
         Elements elements = document.select(".cell > table");
