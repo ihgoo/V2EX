@@ -4,9 +4,19 @@
     <style name="AppTheme" parent="MaterialDrawerTheme.Light">
         <item name="android:actionBarSize">48dp</item>
         <item name="actionBarSize">48dp</item>
-        <item name="colorPrimary">@color/blue</item>
 
+
+        <item name="fabColorNormal">?colorPrimary</item>
+        <item name="fabColorPressed">?colorPrimaryDark</item>
+
+        <item name="colorPrimary">@color/md_blue_600</item>
+        <item name="colorPrimaryDark">@color/md_blue_800</item>
     </style>
 
+    <style name="FloatingButtonsStyle">
+        <item name="fab_size">mini</item>
+        <item name="fab_colorNormal">?fabColorNormal</item>
+        <item name="fab_colorPressed">?fabColorPressed</item>
+    </style>
 
 </resources>

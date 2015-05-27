@@ -11,6 +11,10 @@ public class V2EXSettingHelper {
 
     public static final String PREF_USERNAME = "PREF_USERNAME";
     public static final String PREF_PASSWORD = "PREF_PASSWORD";
+    public static final String PREF_SESSION = "PREF_SESSION";
+
+
+
 
     private Context mContext;
     private SharedPreferences mSharedPreferences;
@@ -40,8 +44,24 @@ public class V2EXSettingHelper {
 
     }
 
+
+    public String getSession(){
+        return mSharedPreferences.getString(PREF_SESSION, "");
+    }
+
+
+    public void setSession(String session){
+        SharedPreferences.Editor edit = mSharedPreferences.edit();
+        edit.putString(PREF_SESSION,session);
+        edit.commit();
+    }
+
     public String getUsername(){
         return mSharedPreferences.getString(PREF_USERNAME, "未登录");
+    }
+
+    public void setUsername(String username){
+        mSharedPreferences.edit().putString(PREF_USERNAME,username).commit();
     }
 
 }

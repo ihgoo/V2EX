@@ -3,6 +3,8 @@ package me.xunhou.v2ex.ui;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -42,6 +44,7 @@ public class ForumDetailFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
 
@@ -76,6 +79,16 @@ public class ForumDetailFragment extends BaseFragment {
         title.setText(forumItemBean.getTitle());
         forumDetail.getForumDetail(forumItemBean.getId() + "");
     }
+
+
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_main, menu);
+    }
+
 
     @Subscribe
     public void getForumDetail(TopicBean topicBean) {

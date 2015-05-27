@@ -31,4 +31,12 @@ public interface VApi {
     @POST("/signin")//next=%2F&u=aa&once=59483&p=aa
     void login(@Field("next") String next, @Field("u") String username, @Field("password") String password, @Field("once") String once,Callback<Response> callback);
 
+    @FormUrlEncoded
+    @POST("/new")//title=1&content=1&node_name=1990&content=1&once=24515
+    void newThread(@Field("titile") String title, @Field("content") String content, @Field("node_name") String nodeName, @Field("once") String once,Callback<Response> callback);
+
+
+    @GET("/new")
+    void getOnceByThread(Callback<Response> callback);
+
 }

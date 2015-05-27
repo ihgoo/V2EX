@@ -24,7 +24,7 @@ public class BaseApplication extends Application {
         Fresco.initialize(this);
         super.onCreate();
         V2EXSettingHelper.getInstance().init(this);
-        CrashHandler.getInstance().init(this);
+//        CrashHandler.getInstance().init(this);
     }
 
 

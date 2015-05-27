@@ -1,6 +1,7 @@
 package me.xunhou.v2ex.ui;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -13,8 +14,12 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.NumberPicker;
 
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.github.johnpersano.supertoasts.SuperCardToast;
 import com.github.johnpersano.supertoasts.SuperToast;
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+import com.mikepenz.iconics.IconicsDrawable;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -40,6 +45,13 @@ public class ForumListFragment extends BaseFragment implements SwipeRefreshLayou
     SwipeRefreshLayout swipeContainer;
     @InjectView(R.id.card_container)
     LinearLayout cardContainer;
+    @InjectView(R.id.fam_actions)
+    FloatingActionMenu famActions;
+    @InjectView(R.id.action_fab_new_thread)
+    FloatingActionButton actionFabNewThread;
+    @InjectView(R.id.action_fab_refresh)
+    FloatingActionButton actionFabRefresh;
+
     private FourmList mFourmList;
     private ForumListAdapter forumListAdapter;
     private ArrayList<ForumItemBean> mList = new ArrayList<>();
@@ -53,6 +65,7 @@ public class ForumListFragment extends BaseFragment implements SwipeRefreshLayou
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(false);
     }
 
 
@@ -76,11 +89,17 @@ public class ForumListFragment extends BaseFragment implements SwipeRefreshLayou
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         BusProvider.register(this);
+        isLoading = false;
         mFourmList = new FourmList();
         if (mList.size() == 0) {
             mFourmList.getTopicsList(page);
-            swipeContainer.setRefreshing(true);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        isLoading = false;
     }
 
     private void initView() {
@@ -90,11 +109,39 @@ public class ForumListFragment extends BaseFragment implements SwipeRefreshLayou
         swipeContainer.setColorSchemeResources(R.color.blue);
         lv.setOnScrollListener(this);
         lv.setOnItemClickListener(this);
+
+        actionFabRefresh.setImageDrawable(new IconicsDrawable(getActivity(), GoogleMaterial.Icon.gmd_refresh).color(Color.WHITE));
+        actionFabRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                famActions.close(true);
+                onRefresh();
+            }
+        });
+
+        actionFabNewThread.setImageDrawable(new IconicsDrawable(getActivity(), GoogleMaterial.Icon.gmd_create).color(Color.WHITE));
+        actionFabNewThread.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                famActions.close(true);
+                newThread();
+            }
+        });
+
+    }
+
+    private void newThread() {
+        NewThreadFragment newThreadFragment = new NewThreadFragment();
+        getFragmentManager().beginTransaction()
+                .replace(R.id.main_frame_container, newThreadFragment, NewThreadFragment.class.getName())
+                .addToBackStack(NewThreadFragment.class.getName())
+                .commit();
     }
 
     @Subscribe
     public void getTopicsList(ArrayList<ForumItemBean> list) {
         getFourmList(list, isRefresh);
+        swipeContainer.setRefreshing(false);
     }
 
     @Subscribe
@@ -114,10 +161,10 @@ public class ForumListFragment extends BaseFragment implements SwipeRefreshLayou
         SuperCardToast superCardToast = new SuperCardToast(getActivity(), SuperToast.Type.STANDARD);
         superCardToast.setText("已更新" + list.size() + "条数据");
         superCardToast.setTextSize(14);
-        superCardToast.setBackground(R.color.blue_transparent);
+        superCardToast.setBackground(R.color.colorPrimaryDark);
         superCardToast.show();
         isLoading = false;
-        swipeContainer.setRefreshing(false);
+
     }
 
     @Override
@@ -144,6 +191,7 @@ public class ForumListFragment extends BaseFragment implements SwipeRefreshLayou
                     if (!isLoading) {
                         page++;
                         isLoading = true;
+                        swipeContainer.setRefreshing(true);
                         mFourmList.getTopicsList(page);
                     }
 

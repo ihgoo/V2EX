@@ -8,6 +8,7 @@ import java.io.InputStream;
 
 import me.xunhou.v2ex.api.VApi;
 import me.xunhou.v2ex.client.Clenit;
+import me.xunhou.v2ex.model.V2EXSettingHelper;
 import me.xunhou.v2ex.utils.StringUtil;
 import me.xunhou.v2ex.utils.V2EXPaser;
 import retrofit.Callback;
@@ -36,7 +37,7 @@ public class Login {
                     InputStream in = res.getBody().in();
                     String responseString = StringUtil.inputStream2String(in);
                     String once = V2EXPaser.paserOnce(responseString);
-                    mHandler.obtainMessage(0,"");
+                    mHandler.sendEmptyMessage(0);
 
                     login("ihgoo", "HUKAIJUN123", once);
                 } catch (IOException e) {
@@ -52,7 +53,7 @@ public class Login {
     }
 
 
-    public void login(String username,String password,String once){
+    public void login(final String username,String password,String once){
         api.login("%2F",username,password,once,new Callback<Response>() {
             @Override
             public void success(Response res, Response response) {
@@ -62,9 +63,11 @@ public class Login {
 
                     for (Header header : response.getHeaders()) {
                         if (header.getName().equalsIgnoreCase("set-cookie")
-                                && header.getValue().toLowerCase().contains("PB3_SESSION") ){
-//                            saveSessionCookie(header.getValue());
-                            Log.e("","session is "+header.getValue());
+                                && header.getValue().toLowerCase().contains("pb3_session") ){
+                            Log.e("session","session is "+header.getValue());
+                            V2EXSettingHelper.getInstance().setSession(header.getValue());
+                            V2EXSettingHelper.getInstance().setUsername(username);
+                            mHandler.sendEmptyMessage(1);
                             break;
                         }
                     }

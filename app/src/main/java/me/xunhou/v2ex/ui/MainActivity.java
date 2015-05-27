@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -33,12 +34,27 @@ public class MainActivity extends AppCompatActivity {
 
     private AccountHeader.Result headerResult;
     private int mQuit = 0;
+    private OnSwipeTouchListener mSwipeListener;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acitivity_main_page);
         ButterKnife.inject(this);
+
+
+        mSwipeListener = new OnSwipeTouchListener(this) {
+            public void onSwipeRight() {
+//                if (HiSettingsHelper.getInstance().isGestureBack()
+//                        && !HiSettingsHelper.getInstance().getIsLandscape()
+//                        && !(getFragmentManager().findFragmentByTag(PostFragment.class.getName()) instanceof PostFragment)) {
+                    popFragment(false);
+//                }
+            }
+        };
+
+        findViewById(R.id.main_frame_container).setOnTouchListener(mSwipeListener);
 
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setNavigationBarColor(Color.parseColor("00000000"));
@@ -103,9 +119,6 @@ public class MainActivity extends AppCompatActivity {
                 popFragment(false);
             }
         });
-
-
-
     }
 
 
@@ -179,4 +192,14 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+//        if (HiSettingsHelper.getInstance().isGestureBack()) {
+            mSwipeListener.onTouch(null, ev);
+//        }
+        return super.dispatchTouchEvent(ev);
+    }
+
+
 }

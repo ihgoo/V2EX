@@ -3,10 +3,12 @@ package me.xunhou.v2ex.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by ihgoo on 2015/5/19.
  */
-public class Member {
+public class Member  implements Serializable {
     @Expose
     private Integer id;
     @Expose

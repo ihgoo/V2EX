@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -33,27 +32,17 @@ public class LoginDialog extends Dialog {
     Login login;
 
     private Context mContext;
-
-    private Handler mHandler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case 0:
+    private Handler mHandler;
 
 
-                    break;
-                case 1:
-
-
-                    break;
-            }
-        }
-    };
+    public void setHander(Handler hander){
+        mHandler = hander;
+        login = new Login(mHandler);
+    }
 
     public LoginDialog(Context context) {
         super(context);
-        login = new Login(mHandler);
+
         mContext = context;
     }
 

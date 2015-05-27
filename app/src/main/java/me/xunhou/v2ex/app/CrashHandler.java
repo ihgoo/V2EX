@@ -29,30 +29,30 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * UncaughtException´¦ÀíÀà,µ±³ÌĞò·¢ÉúUncaughtÒì³£µÄÊ±ºò,ÓĞ¸ÃÀàÀ´½Ó¹Ü³ÌĞò,²¢¼ÇÂ¼·¢ËÍ´íÎó±¨¸æ.
+ * UncaughtExceptionå¤„ç†ç±»,å½“ç¨‹åºå‘ç”ŸUncaughtå¼‚å¸¸çš„æ—¶å€™,æœ‰è¯¥ç±»æ¥æ¥ç®¡ç¨‹åº,å¹¶è®°å½•å‘é€é”™è¯¯æŠ¥å‘Š.
  *
- *  ĞèÒªÔÚApplicationÖĞ×¢²á£¬ÎªÁËÒªÔÚ³ÌĞòÆô¶¯Æ÷¾Í¼à¿ØÕû¸ö³ÌĞò¡£
+ *  éœ€è¦åœ¨Applicationä¸­æ³¨å†Œï¼Œä¸ºäº†è¦åœ¨ç¨‹åºå¯åŠ¨å™¨å°±ç›‘æ§æ•´ä¸ªç¨‹åºã€‚
  */
 public class CrashHandler implements UncaughtExceptionHandler {
 
     public static final String TAG = "CrashHandler";
 
-    //ÏµÍ³Ä¬ÈÏµÄUncaughtException´¦ÀíÀà
+    //ç³»ç»Ÿé»˜è®¤çš„UncaughtExceptionå¤„ç†ç±»
     private UncaughtExceptionHandler mDefaultHandler;
-    //CrashHandlerÊµÀı
+    //CrashHandlerå®ä¾‹
     private static CrashHandler instance;
-    //³ÌĞòµÄContext¶ÔÏó
+    //ç¨‹åºçš„Contextå¯¹è±¡
     private Context mContext;
-    //ÓÃÀ´´æ´¢Éè±¸ĞÅÏ¢ºÍÒì³£ĞÅÏ¢
+    //ç”¨æ¥å­˜å‚¨è®¾å¤‡ä¿¡æ¯å’Œå¼‚å¸¸ä¿¡æ¯
     private Map<String, String> infos = new HashMap<String, String>();
 
-    //ÓÃÓÚ¸ñÊ½»¯ÈÕÆÚ,×÷ÎªÈÕÖ¾ÎÄ¼şÃûµÄÒ»²¿·Ö
+    //ç”¨äºæ ¼å¼åŒ–æ—¥æœŸ,ä½œä¸ºæ—¥å¿—æ–‡ä»¶åçš„ä¸€éƒ¨åˆ†
     private DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
 
-    /** ±£Ö¤Ö»ÓĞÒ»¸öCrashHandlerÊµÀı */
+    /** ä¿è¯åªæœ‰ä¸€ä¸ªCrashHandlerå®ä¾‹ */
     private CrashHandler() {}
 
-    /** »ñÈ¡CrashHandlerÊµÀı ,µ¥ÀıÄ£Ê½ */
+    /** è·å–CrashHandlerå®ä¾‹ ,å•ä¾‹æ¨¡å¼ */
     public static CrashHandler getInstance() {
         if(instance == null)
             instance = new CrashHandler();
@@ -60,66 +60,66 @@ public class CrashHandler implements UncaughtExceptionHandler {
     }
 
     /**
-     * ³õÊ¼»¯
+     * åˆå§‹åŒ–
      */
     public void init(Context context) {
         mContext = context;
-        //»ñÈ¡ÏµÍ³Ä¬ÈÏµÄUncaughtException´¦ÀíÆ÷
+        //è·å–ç³»ç»Ÿé»˜è®¤çš„UncaughtExceptionå¤„ç†å™¨
         mDefaultHandler = Thread.getDefaultUncaughtExceptionHandler();
-        //ÉèÖÃ¸ÃCrashHandlerÎª³ÌĞòµÄÄ¬ÈÏ´¦ÀíÆ÷
+        //è®¾ç½®è¯¥CrashHandlerä¸ºç¨‹åºçš„é»˜è®¤å¤„ç†å™¨
         Thread.setDefaultUncaughtExceptionHandler(this);
     }
 
     /**
-     * µ±UncaughtException·¢ÉúÊ±»á×ªÈë¸Ãº¯ÊıÀ´´¦Àí
+     * å½“UncaughtExceptionå‘ç”Ÿæ—¶ä¼šè½¬å…¥è¯¥å‡½æ•°æ¥å¤„ç†
      */
     @Override
     public void uncaughtException(Thread thread, Throwable ex) {
         if (!handleException(ex) && mDefaultHandler != null) {
-            //Èç¹ûÓÃ»§Ã»ÓĞ´¦ÀíÔòÈÃÏµÍ³Ä¬ÈÏµÄÒì³£´¦ÀíÆ÷À´´¦Àí
+            //å¦‚æœç”¨æˆ·æ²¡æœ‰å¤„ç†åˆ™è®©ç³»ç»Ÿé»˜è®¤çš„å¼‚å¸¸å¤„ç†å™¨æ¥å¤„ç†
             mDefaultHandler.uncaughtException(thread, ex);
         } else {
-//            ToastUtil.showLongTime(mContext,"ÎÒÃÇÒÑ¾­");
+//            ToastUtil.showLongTime(mContext,"æˆ‘ä»¬å·²ç»");
             try {
                 Thread.sleep(2000);
 
             } catch (InterruptedException e) {
                 Log.e(TAG, "error : ", e);
             }
-            //ÍË³ö³ÌĞò
+            //é€€å‡ºç¨‹åº
             AppManager.getInstance().exit(mContext);
         }
     }
 
     /**
-     * ×Ô¶¨Òå´íÎó´¦Àí,ÊÕ¼¯´íÎóĞÅÏ¢ ·¢ËÍ´íÎó±¨¸æµÈ²Ù×÷¾ùÔÚ´ËÍê³É.
+     * è‡ªå®šä¹‰é”™è¯¯å¤„ç†,æ”¶é›†é”™è¯¯ä¿¡æ¯ å‘é€é”™è¯¯æŠ¥å‘Šç­‰æ“ä½œå‡åœ¨æ­¤å®Œæˆ.
      *
      * @param ex
-     * @return true:Èç¹û´¦ÀíÁË¸ÃÒì³£ĞÅÏ¢;·ñÔò·µ»Øfalse.
+     * @return true:å¦‚æœå¤„ç†äº†è¯¥å¼‚å¸¸ä¿¡æ¯;å¦åˆ™è¿”å›false.
      */
     private boolean handleException(Throwable ex) {
         if (ex == null) {
             return false;
         }
-        //ÊÕ¼¯Éè±¸²ÎÊıĞÅÏ¢
+        //æ”¶é›†è®¾å¤‡å‚æ•°ä¿¡æ¯
         collectDeviceInfo(mContext);
 
-        //Ê¹ÓÃToastÀ´ÏÔÊ¾Òì³£ĞÅÏ¢
+        //ä½¿ç”¨Toastæ¥æ˜¾ç¤ºå¼‚å¸¸ä¿¡æ¯
         new Thread() {
             @Override
             public void run() {
                 Looper.prepare();
-                Toast.makeText(mContext, "³ÌĞò³öÏÖµÄÒì³£ÎÒÃÇÒÑ²¶»ñ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "ç¨‹åºå‡ºç°çš„å¼‚å¸¸æˆ‘ä»¬å·²æ•è·", Toast.LENGTH_SHORT).show();
                 Looper.loop();
             }
         }.start();
-        //±£´æÈÕÖ¾ÎÄ¼ş
+        //ä¿å­˜æ—¥å¿—æ–‡ä»¶
         saveCatchInfo2File(ex);
         return true;
     }
 
     /**
-     * ÊÕ¼¯Éè±¸²ÎÊıĞÅÏ¢
+     * æ”¶é›†è®¾å¤‡å‚æ•°ä¿¡æ¯
      * @param ctx
      */
     public void collectDeviceInfo(Context ctx) {
@@ -148,10 +148,10 @@ public class CrashHandler implements UncaughtExceptionHandler {
     }
 
     /**
-     * ±£´æ´íÎóĞÅÏ¢µ½ÎÄ¼şÖĞ
+     * ä¿å­˜é”™è¯¯ä¿¡æ¯åˆ°æ–‡ä»¶ä¸­
      *
      * @param ex
-     * @return  ·µ»ØÎÄ¼şÃû³Æ,±ãÓÚ½«ÎÄ¼ş´«ËÍµ½·şÎñÆ÷
+     * @return  è¿”å›æ–‡ä»¶åç§°,ä¾¿äºå°†æ–‡ä»¶ä¼ é€åˆ°æœåŠ¡å™¨
      */
     private String saveCatchInfo2File(Throwable ex) {
 
@@ -185,7 +185,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
                 }
                 FileOutputStream fos = new FileOutputStream(path + fileName);
                 fos.write(sb.toString().getBytes());
-                //·¢ËÍ¸ø¿ª·¢ÈËÔ±
+                //å‘é€ç»™å¼€å‘äººå‘˜
                 sendCrashLog2PM(path+fileName);
                 fos.close();
             }
@@ -197,13 +197,13 @@ public class CrashHandler implements UncaughtExceptionHandler {
     }
 
     /**
-     * ½«²¶»ñµÄµ¼ÖÂ±ÀÀ£µÄ´íÎóĞÅÏ¢·¢ËÍ¸ø¿ª·¢ÈËÔ±
+     * å°†æ•è·çš„å¯¼è‡´å´©æºƒçš„é”™è¯¯ä¿¡æ¯å‘é€ç»™å¼€å‘äººå‘˜
      *
-     * Ä¿Ç°Ö»½«logÈÕÖ¾±£´æÔÚsdcard ºÍÊä³öµ½LogCatÖĞ£¬²¢Î´·¢ËÍ¸øºóÌ¨¡£
+     * ç›®å‰åªå°†logæ—¥å¿—ä¿å­˜åœ¨sdcard å’Œè¾“å‡ºåˆ°LogCatä¸­ï¼Œå¹¶æœªå‘é€ç»™åå°ã€‚
      */
     private void sendCrashLog2PM(String fileName){
         if(!new File(fileName).exists()){
-            Toast.makeText(mContext, "ÈÕÖ¾ÎÄ¼ş²»´æÔÚ£¡", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "æ—¥å¿—æ–‡ä»¶ä¸å­˜åœ¨ï¼", Toast.LENGTH_SHORT).show();
             return;
         }
         FileInputStream fis = null;
@@ -215,14 +215,14 @@ public class CrashHandler implements UncaughtExceptionHandler {
             while(true){
                 s = reader.readLine();
                 if(s == null) break;
-                //ÓÉÓÚÄ¿Ç°ÉĞÎ´È·¶¨ÒÔºÎÖÖ·½Ê½·¢ËÍ£¬ËùÒÔÏÈ´ò³ölogÈÕÖ¾¡£
+                //ç”±äºç›®å‰å°šæœªç¡®å®šä»¥ä½•ç§æ–¹å¼å‘é€ï¼Œæ‰€ä»¥å…ˆæ‰“å‡ºlogæ—¥å¿—ã€‚
                 Log.i("info", s.toString());
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }finally{	// ¹Ø±ÕÁ÷
+        }finally{	// å…³é—­æµ
             try {
                 reader.close();
                 fis.close();
