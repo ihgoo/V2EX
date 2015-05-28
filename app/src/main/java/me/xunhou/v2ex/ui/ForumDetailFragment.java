@@ -1,7 +1,9 @@
 package me.xunhou.v2ex.ui;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -10,6 +12,10 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+import com.mikepenz.iconics.IconicsDrawable;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -29,17 +35,27 @@ import me.xunhou.v2ex.utils.ToastUtil;
 /**
  * Created by ihgoo on 2015/5/21.
  */
-public class ForumDetailFragment extends BaseFragment {
+public class ForumDetailFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
 
     TextView title;
     ForumDetail forumDetail;
     List<ReplyBean> mList = new ArrayList<ReplyBean>();
     ForumDetailAdapter forumDetailAdapter;
-
+    ForumItemBean forumItemBean;
 
     @InjectView(R.id.lv)
     ListView lv;
+    @InjectView(R.id.action_fab_quick_reply)
+    FloatingActionButton actionFabQuickReply;
+    @InjectView(R.id.action_fab_goto_page)
+    FloatingActionButton actionFabGotoPage;
+    @InjectView(R.id.fam_actions)
+    FloatingActionMenu famActions;
+    @InjectView(R.id.action_fab_refresh)
+    FloatingActionButton actionFabRefresh;
+    @InjectView(R.id.swipe_container)
+    SwipeRefreshLayout swipeContainer;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,17 +86,17 @@ public class ForumDetailFragment extends BaseFragment {
         return view;
     }
 
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         BusProvider.register(this);
         forumDetail = new ForumDetail();
-        ForumItemBean forumItemBean = (ForumItemBean) getArguments().getSerializable(IntentConstant.SerializableitemBean);
+        forumItemBean = (ForumItemBean) getArguments().getSerializable(IntentConstant.SerializableitemBean);
         title.setText(forumItemBean.getTitle());
+        swipeContainer.setRefreshing(true);
         forumDetail.getForumDetail(forumItemBean.getId() + "");
     }
-
-
 
 
     @Override
@@ -94,6 +110,7 @@ public class ForumDetailFragment extends BaseFragment {
     public void getForumDetail(TopicBean topicBean) {
         mList.addAll(topicBean.getReplyBeanList());
         forumDetailAdapter.notifyDataSetChanged();
+        swipeContainer.setRefreshing(false);
     }
 
     @Subscribe
@@ -108,6 +125,51 @@ public class ForumDetailFragment extends BaseFragment {
         lv.addHeaderView(header);
         forumDetailAdapter = new ForumDetailAdapter(mContext, mList);
         lv.setAdapter(forumDetailAdapter);
+
+        swipeContainer.setColorSchemeColors(R.color.primary);
+        swipeContainer.setOnRefreshListener(this);
+        swipeContainer.setRefreshing(false);
+
+        actionFabRefresh.setImageDrawable(new IconicsDrawable(getActivity(), GoogleMaterial.Icon.gmd_refresh).color(Color.WHITE));
+        actionFabRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                famActions.close(true);
+                refresh();
+            }
+        });
+
+        actionFabQuickReply.setImageDrawable(new IconicsDrawable(getActivity(), GoogleMaterial.Icon.gmd_reply).color(Color.WHITE));
+        actionFabQuickReply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                famActions.close(false);
+                famActions.setVisibility(View.INVISIBLE);
+                actionFabQuickReply.setVisibility(View.VISIBLE);
+                actionFabQuickReply.bringToFront();
+//                (new Handler()).postDelayed(new Runnable() {
+//                    public void run() {
+//                        mReplyTextTv.requestFocus();
+//                        mReplyTextTv.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_DOWN, 0, 0, 0));
+//                        mReplyTextTv.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_UP, 0, 0, 0));
+//                    }
+//                }, 200);
+            }
+        });
+
+        actionFabGotoPage.setImageDrawable(new IconicsDrawable(getActivity(), GoogleMaterial.Icon.gmd_swap_horiz).color(Color.WHITE));
+        actionFabGotoPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                famActions.close(true);
+//                showGotoPageDialog();
+            }
+        });
+
+    }
+
+    private void refresh() {
+        forumDetail.getForumDetail(forumItemBean.getId() + "");
     }
 
 
@@ -117,5 +179,11 @@ public class ForumDetailFragment extends BaseFragment {
         ButterKnife.reset(this);
         BusProvider.unregister(this);
         forumDetail.cancel();
+    }
+
+    @Override
+    public void onRefresh() {
+        swipeContainer.setRefreshing(true);
+        refresh();
     }
 }

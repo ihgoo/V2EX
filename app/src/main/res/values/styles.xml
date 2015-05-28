@@ -11,6 +11,14 @@
 
         <item name="colorPrimary">@color/md_blue_600</item>
         <item name="colorPrimaryDark">@color/md_blue_800</item>
+
+
+
+        <item name="list_item_background">@color/day_list_item_background</item>
+
+        <item name="android:cacheColorHint">@android:color/transparent</item>
+        <item name="android:listSelector">@android:color/transparent</item>
+
     </style>
 
     <style name="FloatingButtonsStyle">

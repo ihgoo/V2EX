@@ -3,5 +3,9 @@
 
     <attr name="fabColorNormal" format="color" />
     <attr name="fabColorPressed" format="color" />
+    <attr name="list_item_background" format="color" />
+    <attr name="day_list_item_divider" format="color" />
+
+
 
 </resources>

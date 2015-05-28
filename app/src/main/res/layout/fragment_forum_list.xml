@@ -3,7 +3,8 @@
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center_horizontal">
+    android:layout_gravity="center_horizontal"
+    android:background="?list_item_background">
 
 
     <android.support.v4.widget.SwipeRefreshLayout
@@ -15,6 +16,7 @@
             android:id="@+id/lv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:listSelector="#00000000"
             android:divider="@null"
             android:dividerHeight="0dp"></ListView>
 

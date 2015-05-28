@@ -35,7 +35,6 @@ public interface VApi {
     @POST("/new")//title=1&content=1&node_name=1990&content=1&once=24515
     void newThread(@Field("titile") String title, @Field("content") String content, @Field("node_name") String nodeName, @Field("once") String once,Callback<Response> callback);
 
-
     @GET("/new")
     void getOnceByThread(Callback<Response> callback);
 
