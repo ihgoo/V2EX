@@ -12,5 +12,12 @@
     <string name="title_drawer_newpost">发表新帖</string>
     <string name="title_drawer_setting">设置</string>
     <string name="pref_title_username">用户名</string>
-    <string name="pref_title_password">密码</string>
+
+
+
+
+
+
+    <string name="action_thread_list_settings">设置</string>
+    <string name="action_new_thread">发新帖</string>
 </resources>
