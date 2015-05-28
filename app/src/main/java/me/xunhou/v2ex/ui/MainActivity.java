@@ -3,9 +3,7 @@ package me.xunhou.v2ex.ui;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -17,7 +15,9 @@ import android.widget.Toast;
 
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.accountswitcher.AccountHeader;
+import com.mikepenz.materialdrawer.accountswitcher.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
@@ -32,9 +32,11 @@ import me.xunhou.v2ex.R;
  */
 public class MainActivity extends AppCompatActivity {
 
-    private AccountHeader.Result headerResult;
+    private AccountHeader headerResult;
     private int mQuit = 0;
     private OnSwipeTouchListener mSwipeListener;
+    Drawer drawerResult;
+
 
 
     @Override
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.acitivity_main_page);
         ButterKnife.inject(this);
 
+        setupDrawer();
 
         mSwipeListener = new OnSwipeTouchListener(this) {
             public void onSwipeRight() {
@@ -56,11 +59,8 @@ public class MainActivity extends AppCompatActivity {
 
         findViewById(R.id.main_frame_container).setOnTouchListener(mSwipeListener);
 
-        if (Build.VERSION.SDK_INT >= 21) {
-            getWindow().setNavigationBarColor(Color.parseColor("00000000"));
-        }
 
-        setupDrawer();
+
 
         getFragmentManager().addOnBackStackChangedListener(new BackStackChangedListener());
         Fragment fragment = new ForumListFragment();
@@ -72,9 +72,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupDrawer() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.activity_main_toolbar);
+        toolbar.setNavigationIcon(null);
         setSupportActionBar(toolbar);
 
-        headerResult = new AccountHeader()
+
+        headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
                 .withHeaderBackground(R.drawable.bg_drawer_header)
                 .withCompactStyle(true)
@@ -83,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
                         .withEmail("xunhou")
                         .withIcon("https://cdn.v2ex.co/gravatar/01edd61225f7b051d8874a86dcee87de?s=48&d=retro"))
                 .build();
-
 
 
         ArrayList<IDrawerItem> drawerItems = new ArrayList<>();
@@ -97,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                 .withIcon(GoogleMaterial.Icon.gmd_settings));
 
 
-        Drawer.Result drawerResult = new Drawer()
+        drawerResult = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
                 .withAccountHeader(headerResult)
@@ -120,7 +121,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 
 
 
@@ -186,10 +186,8 @@ public class MainActivity extends AppCompatActivity {
 
     private class DrawerItemClickListener implements Drawer.OnDrawerItemClickListener {
         @Override
-        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l, IDrawerItem iDrawerItem) {
-            Intent intent = new Intent();
-            intent.setClass(MainActivity.this,SettingActivity.class);
-            startActivity(intent);
+        public boolean onItemClick(AdapterView<?> adapterView, View view, int i, long l, IDrawerItem iDrawerItem) {
+            return false;
         }
     }
 

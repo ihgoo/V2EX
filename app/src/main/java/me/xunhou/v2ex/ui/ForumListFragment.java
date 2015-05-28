@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -65,7 +67,8 @@ public class ForumListFragment extends BaseFragment implements SwipeRefreshLayou
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(false);
+        setHasOptionsMenu(true);
+
     }
 
 
@@ -128,6 +131,16 @@ public class ForumListFragment extends BaseFragment implements SwipeRefreshLayou
             }
         });
 
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.menu_thread_list, menu);
+        setActionBarTitle("V2EX");
+        setActionBarDisplayHomeAsUpEnabled(false);
+        syncActionBarState();
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     private void newThread() {

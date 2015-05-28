@@ -60,7 +60,7 @@ public class ForumDetailFragment extends BaseFragment implements SwipeRefreshLay
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
+
     }
 
 
@@ -98,12 +98,12 @@ public class ForumDetailFragment extends BaseFragment implements SwipeRefreshLay
         forumDetail.getForumDetail(forumItemBean.getId() + "");
     }
 
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_main, menu);
     }
+
 
 
     @Subscribe
