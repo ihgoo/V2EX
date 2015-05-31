@@ -47,13 +47,13 @@ public class BaseFragment extends Fragment {
         }
     }
 
-    void setActionBarDisplayHomeAsUpEnabled(boolean showHomeAsUp) {
-        if (getActivity() != null) {
-            ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-            if (actionBar != null)
-                actionBar.setDisplayHomeAsUpEnabled(showHomeAsUp);
-        }
-    }
+//    void setActionBarDisplayHomeAsUpEnabled(boolean showHomeAsUp) {
+//        if (getActivity() != null) {
+//            ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+//            if (actionBar != null)
+//                actionBar.setDisplayHomeAsUpEnabled(showHomeAsUp);
+//        }
+//    }
 //
     void syncActionBarState() {
         if (getActivity() != null) {
@@ -63,19 +63,19 @@ public class BaseFragment extends Fragment {
         }
     }
 //
-//    void setDrawerSelection(int identifier) {
-//        //this only set DrawerItem, not StickyDrawerItem
-//        try {
-//            if (getActivity() != null) {
-//                Drawer.Result drawerResult = ((MainActivity) getActivity()).drawerResult;
-//                if (drawerResult != null
-//                        && !drawerResult.isDrawerOpen()
-//                        && drawerResult.getPositionFromIdentifier(identifier) != drawerResult.getCurrentSelection())
-//                    drawerResult.setSelectionByIdentifier(identifier, false);
-//            }
-//        } catch (Exception ignored) {
-//        }
-//    }
+    void setDrawerSelection(int identifier) {
+        //this only set DrawerItem, not StickyDrawerItem
+        try {
+            if (getActivity() != null) {
+                Drawer drawerResult = ((MainActivity) getActivity()).drawerResult;
+                if (drawerResult != null
+                        && !drawerResult.isDrawerOpen()
+                        && drawerResult.getPositionFromIdentifier(identifier) != drawerResult.getCurrentSelection())
+                    drawerResult.setSelectionByIdentifier(identifier, false);
+            }
+        } catch (Exception ignored) {
+        }
+    }
 
     @Override
     public void onAttach(Activity activity) {

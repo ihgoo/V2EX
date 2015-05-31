@@ -3,6 +3,7 @@ package me.xunhou.v2ex.ui;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -72,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupDrawer() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.activity_main_toolbar);
-        toolbar.setNavigationIcon(null);
         setSupportActionBar(toolbar);
 
 
@@ -106,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
                 .withDrawerItems(drawerItems)
                 .withOnDrawerItemClickListener(new DrawerItemClickListener())
                 .build();
+
 
         drawerResult.keyboardSupportEnabled(this, true);
         drawerResult.getListView().setVerticalScrollBarEnabled(false);
@@ -147,6 +148,12 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         } else {
+            if (!backPressed) {
+                if (drawerResult.isDrawerOpen())
+                    drawerResult.closeDrawer();
+                else
+                    drawerResult.openDrawer();
+            }
             return false;
         }
 
@@ -163,6 +170,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
 
 
     private class BackStackChangedListener implements FragmentManager.OnBackStackChangedListener {
@@ -187,6 +195,11 @@ public class MainActivity extends AppCompatActivity {
     private class DrawerItemClickListener implements Drawer.OnDrawerItemClickListener {
         @Override
         public boolean onItemClick(AdapterView<?> adapterView, View view, int i, long l, IDrawerItem iDrawerItem) {
+
+            Intent intentSetting = new Intent();
+            intentSetting.setClass(MainActivity.this,SettingActivity.class);
+            startActivity(intentSetting);
+
             return false;
         }
     }

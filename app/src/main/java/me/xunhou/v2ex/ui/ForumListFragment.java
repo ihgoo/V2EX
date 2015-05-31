@@ -8,6 +8,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -58,7 +59,7 @@ public class ForumListFragment extends BaseFragment implements SwipeRefreshLayou
     private ForumListAdapter forumListAdapter;
     private ArrayList<ForumItemBean> mList = new ArrayList<>();
 
-    private int page = 0;
+    private int page = 1;
 
     private boolean isLoading = false;
 
@@ -138,9 +139,23 @@ public class ForumListFragment extends BaseFragment implements SwipeRefreshLayou
         menu.clear();
         inflater.inflate(R.menu.menu_thread_list, menu);
         setActionBarTitle("V2EX");
-        setActionBarDisplayHomeAsUpEnabled(false);
         syncActionBarState();
+        int forumIdx = 1;
+        setDrawerSelection(forumIdx);
+
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                return false;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
     }
 
     private void newThread() {
@@ -172,9 +187,9 @@ public class ForumListFragment extends BaseFragment implements SwipeRefreshLayou
         mList.addAll(list);
         forumListAdapter.notifyDataSetChanged();
         SuperCardToast superCardToast = new SuperCardToast(getActivity(), SuperToast.Type.STANDARD);
-        superCardToast.setText("已更新" + list.size() + "条数据");
+        superCardToast.setText("正在浏览第"+(page)+"页...");
         superCardToast.setTextSize(14);
-        superCardToast.setBackground(R.color.colorPrimaryDark);
+        superCardToast.setBackground(R.color.colorPrimary);
         superCardToast.show();
         isLoading = false;
 
@@ -190,6 +205,7 @@ public class ForumListFragment extends BaseFragment implements SwipeRefreshLayou
 
     @Override
     public void onRefresh() {
+        page = 1;
         isRefresh = true;
         swipeContainer.setRefreshing(true);
         mFourmList.getTopicsList(page);
