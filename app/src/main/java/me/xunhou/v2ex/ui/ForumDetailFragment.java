@@ -61,7 +61,7 @@ public class ForumDetailFragment extends BaseFragment implements SwipeRefreshLay
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         forumItemBean = (ForumItemBean) getArguments().getSerializable(IntentConstant.SerializableitemBean);
-        ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         setHasOptionsMenu(true);
     }
 
@@ -105,7 +105,7 @@ public class ForumDetailFragment extends BaseFragment implements SwipeRefreshLay
         menu.clear();
         inflater.inflate(R.menu.menu_thread_list, menu);
         setActionBarTitle(forumItemBean.getTitle());
-
+//        setActionBarDisplayHomeAsUpEnabled(false);
 
         syncActionBarState();
         super.onCreateOptionsMenu(menu, inflater);

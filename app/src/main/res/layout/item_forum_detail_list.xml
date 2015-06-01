@@ -63,7 +63,7 @@
             android:layout_marginRight="4dp"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
-            android:text="This is title"
+            android:text="解析中.."
             android:textSize="14sp" />
     </LinearLayout>
 

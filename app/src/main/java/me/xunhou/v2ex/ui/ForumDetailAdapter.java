@@ -1,13 +1,17 @@
 package me.xunhou.v2ex.ui;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.support.v7.widget.CardView;
+import android.text.Spannable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+
+import net.nightwhistler.htmlspanner.HtmlSpanner;
 
 import java.util.List;
 
@@ -50,13 +54,37 @@ public class ForumDetailAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
-        ReplyBean replyBean = mList.get(position);
+        final ReplyBean replyBean = mList.get(position);
 
         view = View.inflate(mContext, R.layout.item_forum_detail_list, null);
-        ViewHolder viewHolder = new ViewHolder(view);
+        final ViewHolder viewHolder = new ViewHolder(view);
         viewHolder.tvName.setText(replyBean.getMember().getUsername() + "");
         viewHolder.tvTime.setText((position+1)+"#");
-        viewHolder.tvTitle.setText(StringUtil.delHTMLTag(replyBean.getContent()));
+
+
+
+        new AsyncTask<Void, String, Spannable>() {
+
+            @Override
+            protected void onPreExecute() {
+                viewHolder.tvTitle.setText(StringUtil.delHTMLTag(replyBean.getContent()));
+                super.onPreExecute();
+            }
+
+            @Override
+            protected Spannable doInBackground(Void... params) {
+                Spannable spannable = new HtmlSpanner().fromHtml(replyBean.getContent());
+                return spannable;
+            }
+
+            @Override
+            protected void onPostExecute(Spannable spannable) {
+                viewHolder.tvTitle.setText(spannable);
+            }
+        }.execute();
+
+
+
         ImageLoader.getInstance().displayImage(replyBean.getMember().getAvatarMini(), viewHolder.sdAvatar);
         return view;
     }

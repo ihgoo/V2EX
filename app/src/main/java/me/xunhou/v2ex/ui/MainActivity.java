@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MotionEvent;
@@ -121,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
                 popFragment(false);
             }
         });
+
     }
 
 
@@ -182,11 +184,20 @@ public class MainActivity extends AppCompatActivity {
             FragmentManager fm = getFragmentManager();
 
             if (fm.getBackStackEntryCount() > 0) {
+                drawerResult.getActionBarDrawerToggle().setDrawerIndicatorEnabled(false);
                 if (getSupportActionBar() != null)
                     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             } else {
                 if (getSupportActionBar() != null)
                     getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                drawerResult.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
+            }
+
+
+            if (fm.getBackStackEntryCount() > 0) {
+                drawerResult.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            } else {
+                drawerResult.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             }
         }
 
