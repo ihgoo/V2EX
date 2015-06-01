@@ -58,8 +58,9 @@ public class ForumDetailAdapter extends BaseAdapter {
 
         view = View.inflate(mContext, R.layout.item_forum_detail_list, null);
         final ViewHolder viewHolder = new ViewHolder(view);
+        ImageLoader.getInstance().displayImage(replyBean.getMember().getAvatarMini(), viewHolder.sdAvatar);
         viewHolder.tvName.setText(replyBean.getMember().getUsername() + "");
-        viewHolder.tvTime.setText((position+1)+"#");
+        viewHolder.tvTime.setText((position + 1) + "#");
 
 
 
@@ -85,7 +86,7 @@ public class ForumDetailAdapter extends BaseAdapter {
 
 
 
-        ImageLoader.getInstance().displayImage(replyBean.getMember().getAvatarMini(), viewHolder.sdAvatar);
+
         return view;
     }
 
