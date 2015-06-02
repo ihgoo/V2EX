@@ -43,7 +43,7 @@ public class V2EXProgressDialog extends ProgressDialog {
         if (status == ERROR) {
             setIndeterminateDrawable(new IconicsDrawable(getContext(),
                     GoogleMaterial.Icon.gmd_error).sizeDp(48)
-                    .color(getContext().getResources().getColor(R.color.blue)));
+                    .color(getContext().getResources().getColor(R.color.colorPrimary)));
         } else {
             setIndeterminateDrawable(new IconicsDrawable(getContext(),
                     GoogleMaterial.Icon.gmd_info).sizeDp(48)
@@ -65,6 +65,14 @@ public class V2EXProgressDialog extends ProgressDialog {
     public static V2EXProgressDialog show(Context context, String message) {
         V2EXProgressDialog progressDialog = new V2EXProgressDialog(context);
         progressDialog.setMessage(message);
+        progressDialog.show();
+        return progressDialog;
+    }
+
+
+    public static V2EXProgressDialog show(Context context, int messageResId) {
+        V2EXProgressDialog progressDialog = new V2EXProgressDialog(context);
+        progressDialog.setMessage(context.getResources().getString(messageResId));
         progressDialog.show();
         return progressDialog;
     }

@@ -6,4 +6,7 @@ package me.xunhou.v2ex.persistence;
 public class IntentConstant {
     private static final String Serializable = "Serializable";
     public static String SerializableitemBean = Serializable+"";
+
+    public static String NODE = "NODE";
+    public static String NODE_MODE = "NODE_MODE";
 }

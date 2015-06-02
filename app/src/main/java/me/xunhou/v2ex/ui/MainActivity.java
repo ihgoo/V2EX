@@ -3,12 +3,12 @@ package me.xunhou.v2ex.ui;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -19,15 +19,14 @@ import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.accountswitcher.AccountHeader;
-import com.mikepenz.materialdrawer.accountswitcher.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
-import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 import me.xunhou.v2ex.R;
+import me.xunhou.v2ex.persistence.IntentConstant;
 
 /**
  * Created by ihgoo on 2015/5/18.
@@ -65,7 +64,12 @@ public class MainActivity extends AppCompatActivity {
 
 
         getFragmentManager().addOnBackStackChangedListener(new BackStackChangedListener());
+
+
         Fragment fragment = new ForumListFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(IntentConstant.NODE,"recent");
+        fragment.setArguments(bundle);
         getFragmentManager().beginTransaction()
                 .replace(R.id.main_frame_container, fragment, ForumListFragment.class.getName())
                 .commit();
@@ -77,32 +81,56 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-        headerResult = new AccountHeaderBuilder()
-                .withActivity(this)
-                .withHeaderBackground(R.drawable.bg_drawer_header)
-                .withCompactStyle(true)
-                .withSelectionListEnabled(false)
-                .addProfiles(new ProfileDrawerItem()
-                        .withEmail("xunhou")
-                        .withIcon("https://cdn.v2ex.co/gravatar/01edd61225f7b051d8874a86dcee87de?s=48&d=retro"))
-                .build();
+//        headerResult = new AccountHeaderBuilder()
+//                .withActivity(this)
+//                .withHeaderBackground(R.drawable.bg_drawer_header)
+//                .withCompactStyle(true)
+//                .withSelectionListEnabled(false)
+//                .addProfiles(new ProfileDrawerItem()
+//                        .withName("xunhou")
+//                        .withIcon("http://v1.qzone.cc/avatar/201305/17/22/59/519645d5ed855399.jpg!200x200.jpg"))
+//                .build();
 
 
         ArrayList<IDrawerItem> drawerItems = new ArrayList<>();
-        drawerItems.add(new PrimaryDrawerItem().withName(R.string.title_drawer_search).withIcon(GoogleMaterial.Icon.gmd_search));
-        drawerItems.add(new PrimaryDrawerItem().withName(R.string.title_drawer_mypost).withIcon(GoogleMaterial.Icon.gmd_grade));
-        drawerItems.add(new PrimaryDrawerItem().withName(R.string.title_drawer_myreply).withIcon(GoogleMaterial.Icon.gmd_forum));
-        drawerItems.add(new PrimaryDrawerItem().withName(R.string.title_drawer_subject_favorites).withIcon(GoogleMaterial.Icon.gmd_favorite));
-        drawerItems.add(new PrimaryDrawerItem().withName(R.string.title_drawer_node_favorites).withIcon(GoogleMaterial.Icon.gmd_mail).withBadgeTextColor(Color.RED));
-        drawerItems.add(new PrimaryDrawerItem().withName(R.string.title_drawer_notify).withIcon(GoogleMaterial.Icon.gmd_notifications).withBadgeTextColor(Color.RED));
-        drawerItems.add(new PrimaryDrawerItem().withName(R.string.title_drawer_setting)
+//        drawerItems.add(new PrimaryDrawerItem().withName(R.string.title_drawer_search).withIcon(GoogleMaterial.Icon.gmd_search));
+//        drawerItems.add(new PrimaryDrawerItem().withName(R.string.title_drawer_mypost).withIcon(GoogleMaterial.Icon.gmd_grade));
+//        drawerItems.add(new PrimaryDrawerItem().withName(R.string.title_drawer_myreply).withIcon(GoogleMaterial.Icon.gmd_forum));
+//        drawerItems.add(new PrimaryDrawerItem().withName(R.string.title_drawer_subject_favorites).withIcon(GoogleMaterial.Icon.gmd_favorite));
+//        drawerItems.add(new PrimaryDrawerItem().withName(R.string.title_drawer_node_favorites).withIcon(GoogleMaterial.Icon.gmd_mail).withBadgeTextColor(Color.RED));
+//        drawerItems.add(new PrimaryDrawerItem().withName(R.string.title_drawer_notify).withIcon(GoogleMaterial.Icon.gmd_notifications).withBadgeTextColor(Color.RED));
+//        drawerItems.add(new PrimaryDrawerItem().withName(R.string.title_drawer_setting)
+//                .withIcon(GoogleMaterial.Icon.gmd_settings));
+
+        drawerItems.add(new PrimaryDrawerItem().withName(R.string.title_drawer_all)
                 .withIcon(GoogleMaterial.Icon.gmd_settings));
+        drawerItems.add(new PrimaryDrawerItem().withName(R.string.title_drawer_creative).withIcon(GoogleMaterial.Icon.gmd_search));
+        drawerItems.add(new PrimaryDrawerItem().withName(R.string.title_drawer_tech).withIcon(GoogleMaterial.Icon.gmd_grade));
+        drawerItems.add(new PrimaryDrawerItem().withName(R.string.title_drawer_Apple).withIcon(GoogleMaterial.Icon.gmd_forum));
+        drawerItems.add(new PrimaryDrawerItem().withName(R.string.title_drawer_jobs).withIcon(GoogleMaterial.Icon.gmd_favorite));
+        drawerItems.add(new PrimaryDrawerItem().withName(R.string.title_drawer_deals).withIcon(GoogleMaterial.Icon.gmd_mail).withBadgeTextColor(Color.RED));
+        drawerItems.add(new PrimaryDrawerItem().withName(R.string.title_drawer_hot).withIcon(GoogleMaterial.Icon.gmd_notifications).withBadgeTextColor(Color.RED));
+
+
+
+
+
+        //创意
+        //技术
+        //好玩
+        //Apple
+        //酷工作
+        //交易
+        //城市
+        //最热
+        //全部
 
 
         drawerResult = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
-                .withAccountHeader(headerResult)
+                       .withSliderBackgroundColorRes(R.color.white_t)
+//                .withAccountHeader(headerResult)
                 .withTranslucentStatusBar(true)
                 .withDrawerItems(drawerItems)
                 .withOnDrawerItemClickListener(new DrawerItemClickListener())
@@ -205,11 +233,75 @@ public class MainActivity extends AppCompatActivity {
 
     private class DrawerItemClickListener implements Drawer.OnDrawerItemClickListener {
         @Override
-        public boolean onItemClick(AdapterView<?> adapterView, View view, int i, long l, IDrawerItem iDrawerItem) {
+        public boolean onItemClick(AdapterView<?> adapterView, View view, int position, long l, IDrawerItem iDrawerItem) {
 
-            Intent intentSetting = new Intent();
-            intentSetting.setClass(MainActivity.this,SettingActivity.class);
-            startActivity(intentSetting);
+//            Intent intentSetting = new Intent();
+//            intentSetting.setClass(MainActivity.this,SettingActivity.class);
+//            startActivity(intentSetting);
+
+            Log.e("","position:"+position);
+            Fragment fragment = new ForumListFragment();
+            Bundle bundle = new Bundle();
+            switch (position) {
+                case 0:
+                    bundle.putBoolean(IntentConstant.NODE_MODE, false);
+                    bundle.putString(IntentConstant.NODE,"recent");
+                    fragment.setArguments(bundle);
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.main_frame_container, fragment, ForumListFragment.class.getName())
+                            .commit();
+                    break;
+                case 1:
+                    bundle.putBoolean(IntentConstant.NODE_MODE, true);
+                    bundle.putString(IntentConstant.NODE,"creative");
+                    fragment.setArguments(bundle);
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.main_frame_container, fragment, ForumListFragment.class.getName())
+                            .commit();
+                    break;
+                case 2:
+                    bundle.putBoolean(IntentConstant.NODE_MODE, true);
+                    bundle.putString(IntentConstant.NODE, "tech");
+                    fragment.setArguments(bundle);
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.main_frame_container, fragment, ForumListFragment.class.getName())
+                            .commit();
+                    break;
+                case 3:
+                    bundle.putBoolean(IntentConstant.NODE_MODE, true);
+                    bundle.putString(IntentConstant.NODE, "apple");
+                    fragment.setArguments(bundle);
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.main_frame_container, fragment, ForumListFragment.class.getName())
+                            .commit();
+                    break;
+                case 4:
+                    bundle.putBoolean(IntentConstant.NODE_MODE, true);
+                    bundle.putString(IntentConstant.NODE, "jobs");
+                    fragment.setArguments(bundle);
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.main_frame_container, fragment, ForumListFragment.class.getName())
+                            .commit();
+                    break;
+                case 5:
+                    bundle.putBoolean(IntentConstant.NODE_MODE, true);
+                    bundle.putString(IntentConstant.NODE, "deals");
+                    fragment.setArguments(bundle);
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.main_frame_container, fragment, ForumListFragment.class.getName())
+                            .commit();
+                    break;
+                case 6:
+                    bundle.putBoolean(IntentConstant.NODE_MODE, true);
+                    bundle.putString(IntentConstant.NODE, "hot");
+                    fragment.setArguments(bundle);
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.main_frame_container, fragment, ForumListFragment.class.getName())
+                            .commit();
+                    break;
+            }
+
+
 
             return false;
         }

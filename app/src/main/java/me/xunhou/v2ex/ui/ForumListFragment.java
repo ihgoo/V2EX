@@ -65,11 +65,22 @@ public class ForumListFragment extends BaseFragment implements SwipeRefreshLayou
 
     private boolean isRefresh = false;
 
+    private String mNode;
+
+    private boolean nodeMode = false;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
+
+        nodeMode = getArguments().getBoolean(IntentConstant.NODE_MODE);
+
+        mNode = getArguments().getString(IntentConstant.NODE);
+        if (mNode == null ){
+            new IllegalArgumentException("Node is null!!!plase check it.");
+        }
     }
 
 
@@ -95,8 +106,15 @@ public class ForumListFragment extends BaseFragment implements SwipeRefreshLayou
         BusProvider.register(this);
         isLoading = false;
         mFourmList = new FourmList();
+
         if (mList.size() == 0) {
-            mFourmList.getTopicsList(page);
+            if (nodeMode){
+                mFourmList.getTopicsListByNode(mNode);
+            }else{
+                mFourmList.getTopicsList(page,mNode);
+            }
+
+
         }
     }
 
@@ -110,7 +128,7 @@ public class ForumListFragment extends BaseFragment implements SwipeRefreshLayou
         forumListAdapter = new ForumListAdapter(getActivity(), mList);
         lv.setAdapter(forumListAdapter);
         swipeContainer.setOnRefreshListener(this);
-        swipeContainer.setColorSchemeResources(R.color.blue);
+        swipeContainer.setColorSchemeResources(R.color.colorPrimary);
         lv.setOnScrollListener(this);
         lv.setOnItemClickListener(this);
 
@@ -137,8 +155,12 @@ public class ForumListFragment extends BaseFragment implements SwipeRefreshLayou
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
-        inflater.inflate(R.menu.menu_thread_list, menu);
-        setActionBarTitle("V2EX");
+        inflater.inflate(R.menu.menu_main, menu);
+        if (nodeMode){
+            setActionBarTitle(mNode);
+        }else{
+            setActionBarTitle(R.string.app_name);
+        }
         syncActionBarState();
         int forumIdx = 1;
         setDrawerSelection(forumIdx);
@@ -187,7 +209,13 @@ public class ForumListFragment extends BaseFragment implements SwipeRefreshLayou
         mList.addAll(list);
         forumListAdapter.notifyDataSetChanged();
         SuperCardToast superCardToast = new SuperCardToast(getActivity(), SuperToast.Type.STANDARD);
-        superCardToast.setText("正在浏览第"+(page)+"页...");
+        if (nodeMode){
+            superCardToast.setText("正在浏览"+mNode+"节点...");
+        }else{
+            superCardToast.setText("正在浏览第"+(page)+"页...");
+        }
+
+
         superCardToast.setTextSize(14);
         superCardToast.setBackground(R.color.colorPrimary);
         superCardToast.show();
@@ -208,7 +236,12 @@ public class ForumListFragment extends BaseFragment implements SwipeRefreshLayou
         page = 1;
         isRefresh = true;
         swipeContainer.setRefreshing(true);
-        mFourmList.getTopicsList(page);
+
+        if (nodeMode){
+            mFourmList.getTopicsListByNode(mNode);
+        }else{
+            mFourmList.getTopicsList(page,mNode);
+        }
     }
 
     @Override
@@ -221,7 +254,12 @@ public class ForumListFragment extends BaseFragment implements SwipeRefreshLayou
                         page++;
                         isLoading = true;
                         swipeContainer.setRefreshing(true);
-                        mFourmList.getTopicsList(page);
+
+                        if (nodeMode){
+                            mFourmList.getTopicsListByNode(mNode);
+                        }else{
+                            mFourmList.getTopicsList(page,mNode);
+                        }
                     }
 
                 }
