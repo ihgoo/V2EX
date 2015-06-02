@@ -77,6 +77,7 @@ public class V2EXPaser {
         try{
             // try catch -> The topic usually has not topic_content class,so i catch it;
             topic_content = document.getElementsByClass("topic_content").first().html();
+//            document.select("")
         }catch (Exception e){
         }
 
@@ -109,5 +110,10 @@ public class V2EXPaser {
 
         topicBean.setReplyBeanList(replyBeans);
         return topicBean;
+    }
+
+
+    public static void paserPostDataRespose(){
+
     }
 }

@@ -2,14 +2,20 @@ package me.xunhou.v2ex.ui;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.clans.fab.FloatingActionButton;
@@ -23,11 +29,14 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 import me.xunhou.v2ex.R;
 import me.xunhou.v2ex.core.ForumDetail;
+import me.xunhou.v2ex.core.ReplyThread;
 import me.xunhou.v2ex.model.ForumItemBean;
 import me.xunhou.v2ex.model.ReplyBean;
 import me.xunhou.v2ex.model.TopicBean;
+import me.xunhou.v2ex.model.V2EXSettingHelper;
 import me.xunhou.v2ex.persistence.IntentConstant;
 import me.xunhou.v2ex.utils.BusProvider;
 import me.xunhou.v2ex.utils.ToastUtil;
@@ -40,6 +49,7 @@ public class ForumDetailFragment extends BaseFragment implements SwipeRefreshLay
 
     TextView title;
     ForumDetail forumDetail;
+    ReplyThread replyThread;
     List<ReplyBean> mList = new ArrayList<ReplyBean>();
     ForumDetailAdapter forumDetailAdapter;
     ForumItemBean forumItemBean;
@@ -56,12 +66,21 @@ public class ForumDetailFragment extends BaseFragment implements SwipeRefreshLay
     FloatingActionButton actionFabRefresh;
     @InjectView(R.id.swipe_container)
     SwipeRefreshLayout swipeContainer;
+    @InjectView(R.id.border_line)
+    View borderLine;
+    @InjectView(R.id.tv_reply_text)
+    EditText tvReplyText;
+    @InjectView(R.id.ib_reply_post)
+    ImageButton ibReplyPost;
+    @InjectView(R.id.quick_reply)
+    RelativeLayout quickReply;
+
+//    V2EXProgressDialog loaddingDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         forumItemBean = (ForumItemBean) getArguments().getSerializable(IntentConstant.SerializableitemBean);
-
         setHasOptionsMenu(true);
     }
 
@@ -94,6 +113,7 @@ public class ForumDetailFragment extends BaseFragment implements SwipeRefreshLay
         super.onActivityCreated(savedInstanceState);
         BusProvider.register(this);
         forumDetail = new ForumDetail();
+        replyThread = new ReplyThread();
 
         title.setText(forumItemBean.getTitle());
         swipeContainer.setRefreshing(true);
@@ -105,16 +125,14 @@ public class ForumDetailFragment extends BaseFragment implements SwipeRefreshLay
         menu.clear();
         inflater.inflate(R.menu.menu_thread_list, menu);
         setActionBarTitle(forumItemBean.getTitle());
-//        setActionBarDisplayHomeAsUpEnabled(false);
-
         syncActionBarState();
         super.onCreateOptionsMenu(menu, inflater);
     }
 
 
-
     @Subscribe
     public void getForumDetail(TopicBean topicBean) {
+        mList.clear();
         mList.addAll(topicBean.getReplyBeanList());
         forumDetailAdapter.notifyDataSetChanged();
         swipeContainer.setRefreshing(false);
@@ -152,15 +170,16 @@ public class ForumDetailFragment extends BaseFragment implements SwipeRefreshLay
             public void onClick(View view) {
                 famActions.close(false);
                 famActions.setVisibility(View.INVISIBLE);
+                quickReply.setVisibility(View.VISIBLE);
                 actionFabQuickReply.setVisibility(View.VISIBLE);
                 actionFabQuickReply.bringToFront();
-//                (new Handler()).postDelayed(new Runnable() {
-//                    public void run() {
-//                        mReplyTextTv.requestFocus();
-//                        mReplyTextTv.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_DOWN, 0, 0, 0));
-//                        mReplyTextTv.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_UP, 0, 0, 0));
-//                    }
-//                }, 200);
+                (new Handler()).postDelayed(new Runnable() {
+                    public void run() {
+                        tvReplyText.requestFocus();
+                        tvReplyText.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_DOWN, 0, 0, 0));
+                        tvReplyText.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_UP, 0, 0, 0));
+                    }
+                }, 200);
             }
         });
 
@@ -179,6 +198,18 @@ public class ForumDetailFragment extends BaseFragment implements SwipeRefreshLay
         forumDetail.getForumDetail(forumItemBean.getId() + "");
     }
 
+
+
+    @OnClick(R.id.ib_reply_post)
+    void onClick(View v){
+
+        switch (v.getId()) {
+            case R.id.ib_reply_post:
+                replyThread.postReply(forumItemBean.getId()+"",tvReplyText.getText().toString().trim(), V2EXSettingHelper.PREF_PASSWORD);
+                break;
+        }
+
+    }
 
     @Override
     public void onDestroyView() {

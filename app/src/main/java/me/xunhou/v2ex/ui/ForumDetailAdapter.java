@@ -2,7 +2,6 @@ package me.xunhou.v2ex.ui;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.support.v7.widget.CardView;
 import android.text.Spannable;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,30 +60,29 @@ public class ForumDetailAdapter extends BaseAdapter {
         ImageLoader.getInstance().displayImage(replyBean.getMember().getAvatarMini(), viewHolder.sdAvatar);
         viewHolder.tvName.setText(replyBean.getMember().getUsername() + "");
         viewHolder.tvTime.setText((position + 1) + "#");
+        viewHolder.tvTitle.setText(StringUtil.delHTMLTag(replyBean.getContent()));
+        try {
+            new AsyncTask<Void, String, Spannable>() {
 
+                @Override
+                protected void onPreExecute() {
+                    super.onPreExecute();
+                }
 
+                @Override
+                protected Spannable doInBackground(Void... params) {
+                    Spannable spannable = new HtmlSpanner().fromHtml(replyBean.getContent());
+                    return spannable;
+                }
 
-        new AsyncTask<Void, String, Spannable>() {
-
-            @Override
-            protected void onPreExecute() {
-                viewHolder.tvTitle.setText(StringUtil.delHTMLTag(replyBean.getContent()));
-                super.onPreExecute();
-            }
-
-            @Override
-            protected Spannable doInBackground(Void... params) {
-                Spannable spannable = new HtmlSpanner().fromHtml(replyBean.getContent());
-                return spannable;
-            }
-
-            @Override
-            protected void onPostExecute(Spannable spannable) {
-                viewHolder.tvTitle.setText(spannable);
-            }
-        }.execute();
-
-
+                @Override
+                protected void onPostExecute(Spannable spannable) {
+                    viewHolder.tvTitle.setText(spannable);
+                }
+            }.execute();
+        } catch (Exception e) {
+            viewHolder.tvTitle.setText(StringUtil.delHTMLTag(replyBean.getContent()));
+        }
 
 
         return view;
@@ -106,8 +104,6 @@ public class ForumDetailAdapter extends BaseAdapter {
         TextView tvTime;
         @InjectView(R.id.tv_title)
         TextView tvTitle;
-        @InjectView(R.id.cardview)
-        CardView cardview;
 
         ViewHolder(View view) {
             ButterKnife.inject(this, view);
