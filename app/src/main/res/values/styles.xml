@@ -25,6 +25,11 @@
         <item name="android:listSelector">@android:color/transparent</item>
 
 
+
+
+        <item name="icon_send">@mipmap/ic_action_send_now_day</item>
+
+
         <!-- MaterialDrawer specific values -->
         <item name="material_drawer_background">@color/material_drawer_background</item>
         <item name="material_drawer_icons">@color/material_drawer_icons</item>

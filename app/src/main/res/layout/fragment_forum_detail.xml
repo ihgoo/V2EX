@@ -18,8 +18,8 @@
             android:layout_height="match_parent"
             android:clickable="true"
             android:listSelector="#00000000"
-            android:divider="@null"
-            android:dividerHeight="0dp"></ListView>
+            android:divider="@color/day_list_item_divider"
+            android:dividerHeight="1dp"></ListView>
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
@@ -43,7 +43,8 @@
             android:id="@+id/action_fab_goto_page"
             style="@style/FloatingButtonsStyle"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/action_fab_refresh"
@@ -59,5 +60,48 @@
 
 
     </com.github.clans.fab.FloatingActionMenu>
+
+
+    <RelativeLayout
+        android:id="@+id/quick_reply"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="?list_item_background"
+        android:visibility="invisible">
+
+        <View
+            android:id="@+id/border_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentTop="true"
+            android:background="@color/silver" />
+
+        <EditText
+            android:id="@+id/tv_reply_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_toLeftOf="@+id/ib_reply_post"
+            android:hint="@string/action_quick_reply"
+            android:inputType="textMultiLine"
+            android:maxLines="6"
+            android:minLines="1"
+            android:textColor="@color/black"
+            android:scrollHorizontally="false"
+            android:scrollbars="vertical"
+            android:singleLine="false"
+            android:text="" />
+
+        <ImageButton
+            android:id="@+id/ib_reply_post"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignBottom="@+id/tv_reply_text"
+            android:layout_alignParentRight="true"
+            android:contentDescription="@string/ib_quick_send"
+            android:src="?icon_send" />
+
+    </RelativeLayout>
 
 </RelativeLayout>

@@ -9,11 +9,12 @@
     android:layout_marginLeft="8dp"
     android:layout_marginRight="8dp"
     android:layout_marginTop="4dp"
-    android:background="#fff"
+
     android:orientation="horizontal"
     app:cardCornerRadius="2dp">
 
     <LinearLayout
+        android:background="@drawable/normal_selector"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">

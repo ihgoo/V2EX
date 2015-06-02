@@ -11,7 +11,24 @@
     <string name="title_drawer_notify">帖子消息</string>
     <string name="title_drawer_newpost">发表新帖</string>
     <string name="title_drawer_setting">设置</string>
+
+
+    <string name="title_drawer_creative">创意</string>
+    <string name="title_drawer_tech">技术</string>
+    <string name="title_drawer_Apple">Apple</string>
+    <string name="title_drawer_jobs">酷工作</string>
+    <string name="title_drawer_deals">交易</string>
+    <string name="title_drawer_hot">最热</string>
+    <string name="title_drawer_all">全部</string>
+
+
+
+
     <string name="pref_title_username">用户名</string>
+
+
+
+    <string name="loading_reply">正在回帖中...</string>
 
 
 
@@ -19,5 +36,9 @@
 
 
     <string name="action_thread_list_settings">设置</string>
+    <string name="action_quick_reply">输入回帖内容..</string>
     <string name="action_new_thread">发新帖</string>
+    <string name="action_reply_thread">回帖</string>
+
+    <string name="ib_quick_send">回帖</string>
 </resources>
