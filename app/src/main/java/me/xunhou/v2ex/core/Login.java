@@ -61,14 +61,26 @@ public class Login {
                     InputStream in = res.getBody().in();
                     String responseString = StringUtil.inputStream2String(in);
 
+                    String cookie  = null;
                     for (Header header : response.getHeaders()) {
                         if (header.getName().equalsIgnoreCase("set-cookie")
                                 && header.getValue().toLowerCase().contains("pb3_session") ){
-                            Log.e("session","session is "+header.getValue());
+                            Log.e("pb3_session","pb3_session is "+header.getValue());
+
+                            cookie = header.getValue();
                             V2EXSettingHelper.getInstance().setSession(header.getValue());
                             V2EXSettingHelper.getInstance().setUsername(username);
-                            mHandler.sendEmptyMessage(1);
+//                            mHandler.sendEmptyMessage(1);
                             break;
+                        }
+                        if (header.getName().equalsIgnoreCase("set-cookie")
+                                && header.getValue().toLowerCase().contains("a2") ){
+                            Log.e("a2","a2 is "+header.getValue());
+
+
+                            V2EXSettingHelper.getInstance().setA2(header.getValue());
+                            V2EXSettingHelper.getInstance().setUsername(username);
+//                            mHandler.sendEmptyMessage(1);
                         }
                     }
 

@@ -12,8 +12,8 @@ public class V2EXSettingHelper {
     public static final String PREF_USERNAME = "PREF_USERNAME";
     public static final String PREF_PASSWORD = "PREF_PASSWORD";
     public static final String PREF_SESSION = "PREF_SESSION";
-
-
+    public static final String PREF_COOKIE_A2 = "PREF_COOKIE_A2";
+    public static final String PREF_ONCE = "PREF_ONCE";
 
 
     private Context mContext;
@@ -44,24 +44,44 @@ public class V2EXSettingHelper {
 
     }
 
+    public void setOnce(String once) {
+        SharedPreferences.Editor edit = mSharedPreferences.edit();
+        edit.putString(PREF_ONCE, once);
+        edit.commit();
+    }
 
-    public String getSession(){
+    public String getOnce() {
+        return mSharedPreferences.getString(PREF_SESSION, "");
+    }
+
+    public String getSession() {
         return mSharedPreferences.getString(PREF_SESSION, "");
     }
 
 
-    public void setSession(String session){
+    public void setSession(String session) {
         SharedPreferences.Editor edit = mSharedPreferences.edit();
-        edit.putString(PREF_SESSION,session);
+        edit.putString(PREF_SESSION, session);
         edit.commit();
     }
 
-    public String getUsername(){
+    public String getA2() {
+        return mSharedPreferences.getString(PREF_COOKIE_A2, "");
+    }
+
+
+    public void setA2(String session) {
+        SharedPreferences.Editor edit = mSharedPreferences.edit();
+        edit.putString(PREF_COOKIE_A2, session);
+        edit.commit();
+    }
+
+    public String getUsername() {
         return mSharedPreferences.getString(PREF_USERNAME, "未登录");
     }
 
-    public void setUsername(String username){
-        mSharedPreferences.edit().putString(PREF_USERNAME,username).commit();
+    public void setUsername(String username) {
+        mSharedPreferences.edit().putString(PREF_USERNAME, username).commit();
     }
 
 }
