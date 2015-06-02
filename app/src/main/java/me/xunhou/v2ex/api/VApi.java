@@ -15,8 +15,12 @@ import retrofit.http.Query;
  */
 public interface VApi {
 
-    @GET("/recent")
-    void getTopicsList(@Query("p") int page, Callback<Response> callback);
+    @GET("/{node}")
+    void getTopicsList(@Query("p") int page, @Path("node") String node, Callback<Response> callback);
+
+    //?tab=play
+    @GET("/")
+    void getTopicsListByTab(@Query("tab") String tab,Callback<Response> callback);
 
     @GET("/t/{tid}")
     void getForumDetail(@Path("tid") String tid, Callback<Response> callback);
@@ -28,14 +32,20 @@ public interface VApi {
     void getOnce(Callback<Response> callback);
 
     @FormUrlEncoded
-    @POST("/signin")//next=%2F&u=aa&once=59483&p=aa
-    void login(@Field("next") String next, @Field("u") String username, @Field("password") String password, @Field("once") String once,Callback<Response> callback);
+    @POST("/signin")
+//next=%2F&u=aa&once=59483&p=aa
+    void login(@Field("next") String next, @Field("u") String username, @Field("password") String password, @Field("once") String once, Callback<Response> callback);
 
     @FormUrlEncoded
-    @POST("/new")//title=1&content=1&node_name=1990&content=1&once=24515
-    void newThread(@Field("titile") String title, @Field("content") String content, @Field("node_name") String nodeName, @Field("once") String once,Callback<Response> callback);
+    @POST("/new")
+//title=1&content=1&node_name=1990&content=1&once=24515
+    void newThread(@Field("titile") String title, @Field("content") String content, @Field("node_name") String nodeName, @Field("once") String once, Callback<Response> callback);
 
     @GET("/new")
     void getOnceByThread(Callback<Response> callback);
 
+
+    @POST("/t/{uid}")
+//content=61&once=63578
+    void postReply(@Path("uid") String uid, @Field("content") String content, @Field("once") String once, Callback<Response> callback);
 }
