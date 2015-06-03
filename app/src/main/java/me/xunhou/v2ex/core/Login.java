@@ -39,7 +39,7 @@ public class Login {
                     String once = V2EXPaser.paserOnce(responseString);
                     mHandler.sendEmptyMessage(0);
 
-                    login("ihgoo", "HUKAIJUN123", once);
+                    login("", "", once);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
