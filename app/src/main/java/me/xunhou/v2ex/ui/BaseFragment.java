@@ -43,7 +43,7 @@ public class BaseFragment extends Fragment {
         if (getActivity() != null) {
             ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
             if (actionBar != null)
-                actionBar.setTitle(resId);
+                actionBar.setTitle(mContext.getResources().getString(resId).toUpperCase());
         }
     }
 
