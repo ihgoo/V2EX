@@ -1,1 +1,1 @@
-include ':app', ':supertoasts', ':materialSettings'
+include ':app', ':supertoasts'
