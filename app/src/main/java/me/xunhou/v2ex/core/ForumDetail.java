@@ -7,6 +7,7 @@ import java.io.InputStream;
 
 import me.xunhou.v2ex.api.VApi;
 import me.xunhou.v2ex.client.Clenit;
+import me.xunhou.v2ex.model.Message;
 import me.xunhou.v2ex.model.TopicBean;
 import me.xunhou.v2ex.utils.BusProvider;
 import me.xunhou.v2ex.utils.StringUtil;
@@ -36,7 +37,14 @@ public class ForumDetail extends CancelQueue{
                     InputStream in = res.getBody().in();
                     String responseString = StringUtil.inputStream2String(in);
                     TopicBean topicBean = V2EXPaser.paserFourmDetail(responseString);
-                    mBus.post(topicBean);
+                    if (topicBean==null){
+                        Message message = new Message();
+                        message.setReason("需要登录...");
+                        message.setWhat(1);
+                        mBus.post(message);
+                    }else {
+                        mBus.post(topicBean);
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -44,7 +52,10 @@ public class ForumDetail extends CancelQueue{
 
             @Override
             public void failure(RetrofitError error) {
-                mBus.post("获取帖子详情失败");
+                Message message = new Message();
+                message.setReason("获取帖子详情失败...");
+                message.setWhat(1);
+                mBus.post(message);
             }
         });
     }
