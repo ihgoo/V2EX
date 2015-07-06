@@ -53,16 +53,8 @@ public class ForumListAdapter extends BaseAdapter {
         ViewHolder viewHolder = new ViewHolder(view);
         viewHolder.tvName.setText(forumItemBean.getMember().getUsername() + "");
         viewHolder.tvReplay.setText(forumItemBean.getReplies() + "");
-        viewHolder.tvTime.setText(forumItemBean.getLastTime()+"前");
         viewHolder.tvTitle.setText(forumItemBean.getTitle());
         ImageLoader.getInstance().displayImage(forumItemBean.getMember().getAvatarMini(), viewHolder.sdAvatar);
-
-        viewHolder.tvTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
-
         return view;
     }
 
@@ -80,8 +72,6 @@ public class ForumListAdapter extends BaseAdapter {
         TextView tvName;
         @InjectView(R.id.tv_replay)
         TextView tvReplay;
-        @InjectView(R.id.tv_time)
-        TextView tvTime;
         @InjectView(R.id.tv_title)
         TextView tvTitle;
         @InjectView(R.id.cardview)

@@ -50,25 +50,4 @@ public class FourmList extends CancelQueue {
         });
     }
 
-
-    public void getTopicsListByNode(String node) {
-        mVApi.getTopicsListByTab(node, new Callback<Response>() {
-            @Override
-            public void success(Response res, Response response) {
-                try {
-                    InputStream in = res.getBody().in();
-                    String responseString = StringUtil.inputStream2String(in);
-                    ArrayList<ForumItemBean> list = V2EXPaser.paser2ForumItem(responseString);
-                    mBus.post(list);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                mBus.post("获取列表失败");
-            }
-        });
-    }
 }

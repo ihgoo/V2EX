@@ -15,21 +15,20 @@
  */
 package net.nightwhistler.htmlspanner.handlers;
 
-import java.io.IOException;
-import java.net.URL;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ImageSpan;
 
 import net.nightwhistler.htmlspanner.SpanStack;
 import net.nightwhistler.htmlspanner.TagNodeHandler;
 
 import org.htmlcleaner.TagNode;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
-import android.text.style.ImageSpan;
+import java.io.IOException;
+import java.net.URL;
 
 /**
  * Handles image tags.
@@ -50,6 +49,8 @@ public class ImageHandler extends TagNodeHandler {
 		builder.append("\uFFFC");
 
 		Bitmap bitmap = loadBitmap(src);
+
+
 
 		if (bitmap != null) {
 			Drawable drawable = new BitmapDrawable(bitmap);
