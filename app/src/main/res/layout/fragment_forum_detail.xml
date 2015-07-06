@@ -23,6 +23,17 @@
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tv_need_login"
+        android:text="查看该页需要登录..."
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:listSelector="#00000000"
+        ></TextView>
+
     <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/fam_actions"
         android:layout_width="wrap_content"
@@ -39,12 +50,12 @@
         fab:menu_icon="@drawable/fab_add"
         fab:menu_shadowColor="#00000000">
 
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/action_fab_goto_page"
-            style="@style/FloatingButtonsStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
+        <!--<com.github.clans.fab.FloatingActionButton-->
+            <!--android:id="@+id/action_fab_goto_page"-->
+            <!--style="@style/FloatingButtonsStyle"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--/>-->
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/action_fab_refresh"
@@ -52,11 +63,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/action_fab_quick_reply"
-            style="@style/FloatingButtonsStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <!--<com.github.clans.fab.FloatingActionButton-->
+            <!--android:id="@+id/action_fab_quick_reply"-->
+            <!--style="@style/FloatingButtonsStyle"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" />-->
 
 
     </com.github.clans.fab.FloatingActionMenu>

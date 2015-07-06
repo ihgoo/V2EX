@@ -50,8 +50,8 @@ public class ForumListFragment extends BaseFragment implements SwipeRefreshLayou
     LinearLayout cardContainer;
     @InjectView(R.id.fam_actions)
     FloatingActionMenu famActions;
-    @InjectView(R.id.action_fab_new_thread)
-    FloatingActionButton actionFabNewThread;
+//  @InjectView(R.id.action_fab_new_thread)
+//  FloatingActionButton actionFabNewThread;
     @InjectView(R.id.action_fab_refresh)
     FloatingActionButton actionFabRefresh;
 
@@ -67,7 +67,6 @@ public class ForumListFragment extends BaseFragment implements SwipeRefreshLayou
 
     private String mNode;
 
-    private boolean nodeMode = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,10 +74,8 @@ public class ForumListFragment extends BaseFragment implements SwipeRefreshLayou
         setHasOptionsMenu(true);
 
 
-        nodeMode = getArguments().getBoolean(IntentConstant.NODE_MODE);
-
         mNode = getArguments().getString(IntentConstant.NODE);
-        if (mNode == null ){
+        if (mNode == null) {
             new IllegalArgumentException("Node is null!!!plase check it.");
         }
     }
@@ -108,13 +105,7 @@ public class ForumListFragment extends BaseFragment implements SwipeRefreshLayou
         mFourmList = new FourmList();
 
         if (mList.size() == 0) {
-            if (nodeMode){
-                mFourmList.getTopicsListByNode(mNode);
-            }else{
-                mFourmList.getTopicsList(page,mNode);
-            }
-
-
+            mFourmList.getTopicsList(page, mNode);
         }
     }
 
@@ -141,26 +132,22 @@ public class ForumListFragment extends BaseFragment implements SwipeRefreshLayou
             }
         });
 
-        actionFabNewThread.setImageDrawable(new IconicsDrawable(getActivity(), GoogleMaterial.Icon.gmd_create).color(Color.WHITE));
-        actionFabNewThread.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                famActions.close(true);
-                newThread();
-            }
-        });
+//        actionFabNewThread.setImageDrawable(new IconicsDrawable(getActivity(), GoogleMaterial.Icon.gmd_create).color(Color.WHITE));
+//        actionFabNewThread.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                famActions.close(true);
+//                newThread();
+//            }
+//        });
 
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
-        inflater.inflate(R.menu.menu_main, menu);
-        if (nodeMode){
-            setActionBarTitle(mNode);
-        }else{
-            setActionBarTitle(R.string.app_name);
-        }
+//        inflater.inflate(R.menu.menu_main, menu);
+        setActionBarTitle(mNode.toUpperCase());
         syncActionBarState();
         int forumIdx = 1;
         setDrawerSelection(forumIdx);
@@ -209,10 +196,10 @@ public class ForumListFragment extends BaseFragment implements SwipeRefreshLayou
         mList.addAll(list);
         forumListAdapter.notifyDataSetChanged();
         SuperCardToast superCardToast = new SuperCardToast(getActivity(), SuperToast.Type.STANDARD);
-        if (nodeMode){
-            superCardToast.setText("正在浏览"+mNode+"节点...");
-        }else{
-            superCardToast.setText("正在浏览第"+(page)+"页...");
+        if (page == 1) {
+            superCardToast.setText("正在浏览" + mNode + "节点...");
+        } else {
+            superCardToast.setText("正在浏览第" + (page) + "页...");
         }
 
 
@@ -237,11 +224,7 @@ public class ForumListFragment extends BaseFragment implements SwipeRefreshLayou
         isRefresh = true;
         swipeContainer.setRefreshing(true);
 
-        if (nodeMode){
-            mFourmList.getTopicsListByNode(mNode);
-        }else{
-            mFourmList.getTopicsList(page,mNode);
-        }
+        mFourmList.getTopicsList(page, mNode);
     }
 
     @Override
@@ -254,12 +237,7 @@ public class ForumListFragment extends BaseFragment implements SwipeRefreshLayou
                         page++;
                         isLoading = true;
                         swipeContainer.setRefreshing(true);
-
-                        if (nodeMode){
-                            mFourmList.getTopicsListByNode(mNode);
-                        }else{
-                            mFourmList.getTopicsList(page,mNode);
-                        }
+                        mFourmList.getTopicsList(page, mNode);
                     }
 
                 }

@@ -13,13 +13,14 @@
     <string name="title_drawer_setting">设置</string>
 
 
-    <string name="title_drawer_creative">创意</string>
-    <string name="title_drawer_tech">技术</string>
-    <string name="title_drawer_Apple">Apple</string>
+    <string name="title_drawer_programmer">程序猿</string>
+    <string name="title_drawer_create">创意</string>
+    <string name="title_drawer_share">分享</string>
+    <string name="title_drawer_apple">Apple</string>
     <string name="title_drawer_jobs">酷工作</string>
-    <string name="title_drawer_deals">交易</string>
-    <string name="title_drawer_hot">最热</string>
-    <string name="title_drawer_all">全部</string>
+    <string name="title_drawer_ideas">奇思妙想</string>
+    <string name="title_drawer_qna">问与答</string>
+
 
 
 

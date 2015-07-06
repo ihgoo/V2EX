@@ -3,6 +3,7 @@ package me.xunhou.v2ex.ui;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -19,7 +20,9 @@ import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.accountswitcher.AccountHeader;
+import com.mikepenz.materialdrawer.accountswitcher.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import java.util.ArrayList;
@@ -38,6 +41,14 @@ public class MainActivity extends AppCompatActivity {
     private OnSwipeTouchListener mSwipeListener;
     Drawer drawerResult;
 
+    private final int DRAWER_POSITION_PROGRAMMER = 0;
+    private final int DRAWER_POSITION_CREATE = 1;
+    private final int DRAWER_POSITION_SHARE = 2;
+    private final int DRAWER_POSITION_APPLE = 3;
+    private final int DRAWER_POSITION_JOBS = 4;
+    private final int DRAWER_POSITION_IDEAS = 5;
+    private final int DRAWER_POSITION_QNA = 6;
+    private final int DRAWER_POSITION_SETTING = 7;
 
 
     @Override
@@ -50,25 +61,19 @@ public class MainActivity extends AppCompatActivity {
 
         mSwipeListener = new OnSwipeTouchListener(this) {
             public void onSwipeRight() {
-//                if (HiSettingsHelper.getInstance().isGestureBack()
-//                        && !HiSettingsHelper.getInstance().getIsLandscape()
-//                        && !(getFragmentManager().findFragmentByTag(PostFragment.class.getName()) instanceof PostFragment)) {
-                    popFragment(false);
-//                }
+                popFragment(false);
             }
         };
 
         findViewById(R.id.main_frame_container).setOnTouchListener(mSwipeListener);
-
-
-
-
         getFragmentManager().addOnBackStackChangedListener(new BackStackChangedListener());
+        initFristFragment();
+    }
 
-
+    private void initFristFragment() {
         Fragment fragment = new ForumListFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(IntentConstant.NODE,"recent");
+        bundle.putString(IntentConstant.NODE, "programmer");
         fragment.setArguments(bundle);
         getFragmentManager().beginTransaction()
                 .replace(R.id.main_frame_container, fragment, ForumListFragment.class.getName())
@@ -81,56 +86,33 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-//        headerResult = new AccountHeaderBuilder()
-//                .withActivity(this)
-//                .withHeaderBackground(R.drawable.bg_drawer_header)
-//                .withCompactStyle(true)
-//                .withSelectionListEnabled(false)
-//                .addProfiles(new ProfileDrawerItem()
-//                        .withName("xunhou")
-//                        .withIcon("http://v1.qzone.cc/avatar/201305/17/22/59/519645d5ed855399.jpg!200x200.jpg"))
-//                .build();
+        headerResult = new AccountHeaderBuilder()
+                .withActivity(this)
+                .withHeaderBackground(R.drawable.header)
+                .withCompactStyle(true)
+                .withSelectionListEnabled(false)
+                .addProfiles(new ProfileDrawerItem()
+                        .withName("xunhou")
+                        .withIcon("http://v1.qzone.cc/avatar/201305/17/22/59/519645d5ed855399.jpg!200x200.jpg"))
+                .build();
 
 
         ArrayList<IDrawerItem> drawerItems = new ArrayList<>();
-//        drawerItems.add(new PrimaryDrawerItem().withName(R.string.title_drawer_search).withIcon(GoogleMaterial.Icon.gmd_search));
-//        drawerItems.add(new PrimaryDrawerItem().withName(R.string.title_drawer_mypost).withIcon(GoogleMaterial.Icon.gmd_grade));
-//        drawerItems.add(new PrimaryDrawerItem().withName(R.string.title_drawer_myreply).withIcon(GoogleMaterial.Icon.gmd_forum));
-//        drawerItems.add(new PrimaryDrawerItem().withName(R.string.title_drawer_subject_favorites).withIcon(GoogleMaterial.Icon.gmd_favorite));
-//        drawerItems.add(new PrimaryDrawerItem().withName(R.string.title_drawer_node_favorites).withIcon(GoogleMaterial.Icon.gmd_mail).withBadgeTextColor(Color.RED));
-//        drawerItems.add(new PrimaryDrawerItem().withName(R.string.title_drawer_notify).withIcon(GoogleMaterial.Icon.gmd_notifications).withBadgeTextColor(Color.RED));
-//        drawerItems.add(new PrimaryDrawerItem().withName(R.string.title_drawer_setting)
-//                .withIcon(GoogleMaterial.Icon.gmd_settings));
-
-        drawerItems.add(new PrimaryDrawerItem().withName(R.string.title_drawer_all)
-                .withIcon(GoogleMaterial.Icon.gmd_settings));
-        drawerItems.add(new PrimaryDrawerItem().withName(R.string.title_drawer_creative).withIcon(GoogleMaterial.Icon.gmd_search));
-        drawerItems.add(new PrimaryDrawerItem().withName(R.string.title_drawer_tech).withIcon(GoogleMaterial.Icon.gmd_grade));
-        drawerItems.add(new PrimaryDrawerItem().withName(R.string.title_drawer_Apple).withIcon(GoogleMaterial.Icon.gmd_forum));
-        drawerItems.add(new PrimaryDrawerItem().withName(R.string.title_drawer_jobs).withIcon(GoogleMaterial.Icon.gmd_favorite));
-        drawerItems.add(new PrimaryDrawerItem().withName(R.string.title_drawer_deals).withIcon(GoogleMaterial.Icon.gmd_mail).withBadgeTextColor(Color.RED));
-        drawerItems.add(new PrimaryDrawerItem().withName(R.string.title_drawer_hot).withIcon(GoogleMaterial.Icon.gmd_notifications).withBadgeTextColor(Color.RED));
-
-
-
-
-
-        //创意
-        //技术
-        //好玩
-        //Apple
-        //酷工作
-        //交易
-        //城市
-        //最热
-        //全部
+        drawerItems.add(new PrimaryDrawerItem().withName(R.string.title_drawer_programmer).withIcon(GoogleMaterial.Icon.gmd_create));
+        drawerItems.add(new PrimaryDrawerItem().withName(R.string.title_drawer_create).withIcon(GoogleMaterial.Icon.gmd_grade));
+        drawerItems.add(new PrimaryDrawerItem().withName(R.string.title_drawer_share).withIcon(GoogleMaterial.Icon.gmd_forum));
+        drawerItems.add(new PrimaryDrawerItem().withName(R.string.title_drawer_apple).withIcon(GoogleMaterial.Icon.gmd_favorite));
+        drawerItems.add(new PrimaryDrawerItem().withName(R.string.title_drawer_jobs).withIcon(GoogleMaterial.Icon.gmd_mail).withBadgeTextColor(Color.RED));
+        drawerItems.add(new PrimaryDrawerItem().withName(R.string.title_drawer_ideas).withIcon(GoogleMaterial.Icon.gmd_whatshot).withBadgeTextColor(Color.RED));
+        drawerItems.add(new PrimaryDrawerItem().withName(R.string.title_drawer_qna)
+                .withIcon(GoogleMaterial.Icon.gmd_adb));
 
 
         drawerResult = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
-                       .withSliderBackgroundColorRes(R.color.white_t)
-//                .withAccountHeader(headerResult)
+                .withSliderBackgroundColorRes(R.color.white_t)
+                .withAccountHeader(headerResult)
                 .withTranslucentStatusBar(true)
                 .withDrawerItems(drawerItems)
                 .withOnDrawerItemClickListener(new DrawerItemClickListener())
@@ -152,8 +134,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-
-
 
 
     public boolean popFragment(boolean backPressed) {
@@ -202,7 +182,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     private class BackStackChangedListener implements FragmentManager.OnBackStackChangedListener {
 
         @Override
@@ -231,76 +210,75 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+
+
     private class DrawerItemClickListener implements Drawer.OnDrawerItemClickListener {
         @Override
         public boolean onItemClick(AdapterView<?> adapterView, View view, int position, long l, IDrawerItem iDrawerItem) {
 
-//            Intent intentSetting = new Intent();
-//            intentSetting.setClass(MainActivity.this,SettingActivity.class);
-//            startActivity(intentSetting);
-
-            Log.e("","position:"+position);
+            Log.e("", "position:" + position);
             Fragment fragment = new ForumListFragment();
             Bundle bundle = new Bundle();
             switch (position) {
-                case 0:
-                    bundle.putBoolean(IntentConstant.NODE_MODE, false);
-                    bundle.putString(IntentConstant.NODE,"recent");
+                case DRAWER_POSITION_PROGRAMMER:
+                    bundle.putString(IntentConstant.NODE, "programmer");
                     fragment.setArguments(bundle);
                     getFragmentManager().beginTransaction()
                             .replace(R.id.main_frame_container, fragment, ForumListFragment.class.getName())
                             .commit();
                     break;
-                case 1:
-                    bundle.putBoolean(IntentConstant.NODE_MODE, true);
-                    bundle.putString(IntentConstant.NODE,"creative");
+                case DRAWER_POSITION_CREATE:
+                    bundle.putString(IntentConstant.NODE, "create");
                     fragment.setArguments(bundle);
                     getFragmentManager().beginTransaction()
                             .replace(R.id.main_frame_container, fragment, ForumListFragment.class.getName())
                             .commit();
                     break;
-                case 2:
-                    bundle.putBoolean(IntentConstant.NODE_MODE, true);
-                    bundle.putString(IntentConstant.NODE, "tech");
+                case DRAWER_POSITION_SHARE:
+                    bundle.putString(IntentConstant.NODE, "share");
                     fragment.setArguments(bundle);
                     getFragmentManager().beginTransaction()
                             .replace(R.id.main_frame_container, fragment, ForumListFragment.class.getName())
                             .commit();
                     break;
-                case 3:
-                    bundle.putBoolean(IntentConstant.NODE_MODE, true);
+                case DRAWER_POSITION_APPLE:
                     bundle.putString(IntentConstant.NODE, "apple");
                     fragment.setArguments(bundle);
                     getFragmentManager().beginTransaction()
                             .replace(R.id.main_frame_container, fragment, ForumListFragment.class.getName())
                             .commit();
                     break;
-                case 4:
-                    bundle.putBoolean(IntentConstant.NODE_MODE, true);
+                case DRAWER_POSITION_JOBS:
                     bundle.putString(IntentConstant.NODE, "jobs");
                     fragment.setArguments(bundle);
                     getFragmentManager().beginTransaction()
                             .replace(R.id.main_frame_container, fragment, ForumListFragment.class.getName())
                             .commit();
                     break;
-                case 5:
-                    bundle.putBoolean(IntentConstant.NODE_MODE, true);
-                    bundle.putString(IntentConstant.NODE, "deals");
+                case DRAWER_POSITION_IDEAS:
+                    bundle.putString(IntentConstant.NODE, "ideas");
                     fragment.setArguments(bundle);
                     getFragmentManager().beginTransaction()
                             .replace(R.id.main_frame_container, fragment, ForumListFragment.class.getName())
                             .commit();
                     break;
-                case 6:
-                    bundle.putBoolean(IntentConstant.NODE_MODE, true);
-                    bundle.putString(IntentConstant.NODE, "hot");
+                case DRAWER_POSITION_QNA:
+                    bundle.putString(IntentConstant.NODE, "qna");
                     fragment.setArguments(bundle);
                     getFragmentManager().beginTransaction()
                             .replace(R.id.main_frame_container, fragment, ForumListFragment.class.getName())
                             .commit();
                     break;
-            }
+                case DRAWER_POSITION_SETTING:
+                    Intent intentSetting = new Intent();
+                    // TODO 设置界面需要重写
+//                    intentSetting.setClass(MainActivity.this, SettingActivity.class);
+//                    startActivity(intentSetting);
 
+                    break;
+
+            }
 
 
             return false;
@@ -310,7 +288,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
 //        if (HiSettingsHelper.getInstance().isGestureBack()) {
-            mSwipeListener.onTouch(null, ev);
+        mSwipeListener.onTouch(null, ev);
 //        }
         return super.dispatchTouchEvent(ev);
     }
