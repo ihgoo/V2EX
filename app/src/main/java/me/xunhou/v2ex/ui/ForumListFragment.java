@@ -102,11 +102,15 @@ public class ForumListFragment extends BaseFragment implements SwipeRefreshLayou
         super.onActivityCreated(savedInstanceState);
         BusProvider.register(this);
         isLoading = false;
-        mFourmList = new FourmList();
+        swipeContainer.post(new Runnable() {
+            @Override
+            public void run() {
+                swipeContainer.setRefreshing(true);
+            }
+        });
 
-        if (mList.size() == 0) {
-            mFourmList.getTopicsList(page, mNode);
-        }
+        mFourmList = new FourmList();
+        mFourmList.getTopicsList(page, mNode);
     }
 
     @Override
@@ -146,7 +150,7 @@ public class ForumListFragment extends BaseFragment implements SwipeRefreshLayou
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
-//        inflater.inflate(R.menu.menu_main, menu);
+        inflater.inflate(R.menu.menu_main, menu);
         setActionBarTitle(mNode.toUpperCase());
         syncActionBarState();
         int forumIdx = 1;
@@ -222,8 +226,6 @@ public class ForumListFragment extends BaseFragment implements SwipeRefreshLayou
     public void onRefresh() {
         page = 1;
         isRefresh = true;
-        swipeContainer.setRefreshing(true);
-
         mFourmList.getTopicsList(page, mNode);
     }
 
