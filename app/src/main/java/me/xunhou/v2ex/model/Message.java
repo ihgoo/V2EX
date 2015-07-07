@@ -6,7 +6,16 @@ package me.xunhou.v2ex.model;
 public class Message {
 
     private int what;
-    private String reason;
+    private int reason;
+
+
+    public int getReason() {
+        return reason;
+    }
+
+    public void setReason(int reason) {
+        this.reason = reason;
+    }
 
     public int getWhat() {
         return what;
@@ -14,13 +23,5 @@ public class Message {
 
     public void setWhat(int what) {
         this.what = what;
-    }
-
-    public String getReason() {
-        return reason;
-    }
-
-    public void setReason(String reason) {
-        this.reason = reason;
     }
 }

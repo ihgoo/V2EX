@@ -5,10 +5,12 @@ import com.squareup.otto.Bus;
 import java.io.IOException;
 import java.io.InputStream;
 
+import me.xunhou.v2ex.R;
 import me.xunhou.v2ex.api.VApi;
 import me.xunhou.v2ex.client.Clenit;
 import me.xunhou.v2ex.model.Message;
 import me.xunhou.v2ex.model.TopicBean;
+import me.xunhou.v2ex.persistence.Constant;
 import me.xunhou.v2ex.utils.BusProvider;
 import me.xunhou.v2ex.utils.StringUtil;
 import me.xunhou.v2ex.utils.V2EXPaser;
@@ -39,8 +41,8 @@ public class ForumDetail extends CancelQueue{
                     TopicBean topicBean = V2EXPaser.paserFourmDetail(responseString);
                     if (topicBean==null){
                         Message message = new Message();
-                        message.setReason("需要登录...");
-                        message.setWhat(1);
+                        message.setReason(R.string.reason_need_login);
+                        message.setWhat(Constant.RESONSE_NEED_LOGIN);
                         mBus.post(message);
                     }else {
                         mBus.post(topicBean);
@@ -53,8 +55,8 @@ public class ForumDetail extends CancelQueue{
             @Override
             public void failure(RetrofitError error) {
                 Message message = new Message();
-                message.setReason("获取帖子详情失败...");
-                message.setWhat(1);
+                message.setReason(R.string.reson_network_error);
+                message.setWhat(Constant.RESONSE_NETWORK_ERROR);
                 mBus.post(message);
             }
         });

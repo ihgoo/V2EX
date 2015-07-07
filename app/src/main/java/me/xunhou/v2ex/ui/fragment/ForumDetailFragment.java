@@ -38,6 +38,7 @@ import me.xunhou.v2ex.model.Message;
 import me.xunhou.v2ex.model.ReplyBean;
 import me.xunhou.v2ex.model.TopicBean;
 import me.xunhou.v2ex.model.V2EXSettingHelper;
+import me.xunhou.v2ex.persistence.Constant;
 import me.xunhou.v2ex.persistence.IntentConstant;
 import me.xunhou.v2ex.ui.BaseFragment;
 import me.xunhou.v2ex.ui.adapter.ForumDetailAdapter;
@@ -149,14 +150,13 @@ public class ForumDetailFragment extends BaseFragment implements SwipeRefreshLay
 
     @Subscribe
     public void handleMessage(Message message) {
-        ToastUtil.showLongTime(getActivity(), message.getReason());
+        ToastUtil.showLongTime(getActivity(), getResources().getString(message.getReason()));
         switch (message.getWhat()) {
-            case 1:
+            case Constant.RESONSE_NEED_LOGIN:
                 tvNeedLogin.setVisibility(View.VISIBLE);
                 swipeContainer.setVisibility(View.GONE);
                 break;
         }
-
     }
 
 

@@ -5,4 +5,6 @@ package me.xunhou.v2ex.persistence;
  */
 public class Constant {
     public static final String API_URL =  "https://www.v2ex.com/";
+    public static final int RESONSE_NEED_LOGIN =  1;
+    public static final int RESONSE_NETWORK_ERROR =  2;
 }
