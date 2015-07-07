@@ -169,7 +169,6 @@ public class ForumDetailFragment extends BaseFragment implements SwipeRefreshLay
 
         swipeContainer.setColorSchemeColors(R.color.primary);
         swipeContainer.setOnRefreshListener(this);
-        swipeContainer.setRefreshing(false);
 
         actionFabRefresh.setImageDrawable(new IconicsDrawable(getActivity(), GoogleMaterial.Icon.gmd_refresh).color(Color.WHITE));
         actionFabRefresh.setOnClickListener(new View.OnClickListener() {
