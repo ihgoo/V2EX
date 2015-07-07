@@ -1,8 +1,13 @@
 package me.xunhou.v2ex.utils;
 
+import android.app.Activity;
 import android.content.Context;
+import android.view.Gravity;
 
+import com.github.johnpersano.supertoasts.SuperCardToast;
 import com.github.johnpersano.supertoasts.SuperToast;
+
+import me.xunhou.v2ex.R;
 
 
 /**
