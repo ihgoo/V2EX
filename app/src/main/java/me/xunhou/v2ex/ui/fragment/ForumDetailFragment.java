@@ -116,9 +116,13 @@ public class ForumDetailFragment extends BaseFragment implements SwipeRefreshLay
         BusProvider.register(this);
         forumDetail = new ForumDetail();
         replyThread = new ReplyThread();
-
         title.setText(forumItemBean.getTitle());
-        swipeContainer.setRefreshing(true);
+        swipeContainer.post(new Runnable() {
+            @Override
+            public void run() {
+                swipeContainer.setRefreshing(true);
+            }
+        });
         forumDetail.getForumDetail(forumItemBean.getId() + "");
     }
 
