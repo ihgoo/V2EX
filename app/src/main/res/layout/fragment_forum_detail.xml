@@ -50,12 +50,12 @@
         fab:menu_icon="@drawable/fab_add"
         fab:menu_shadowColor="#00000000">
 
-        <!--<com.github.clans.fab.FloatingActionButton-->
-            <!--android:id="@+id/action_fab_goto_page"-->
-            <!--style="@style/FloatingButtonsStyle"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--/>-->
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/action_fab_goto_page"
+            style="@style/FloatingButtonsStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/action_fab_refresh"
@@ -63,11 +63,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <!--<com.github.clans.fab.FloatingActionButton-->
-            <!--android:id="@+id/action_fab_quick_reply"-->
-            <!--style="@style/FloatingButtonsStyle"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content" />-->
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/action_fab_quick_reply"
+            style="@style/FloatingButtonsStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
 
     </com.github.clans.fab.FloatingActionMenu>

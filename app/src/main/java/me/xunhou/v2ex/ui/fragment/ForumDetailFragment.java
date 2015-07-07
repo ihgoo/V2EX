@@ -2,11 +2,14 @@ package me.xunhou.v2ex.ui.fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -56,10 +59,10 @@ public class ForumDetailFragment extends BaseFragment implements SwipeRefreshLay
 
     @InjectView(R.id.lv)
     ListView lv;
-//    @InjectView(R.id.action_fab_quick_reply)
-//    FloatingActionButton actionFabQuickReply;
-//    @InjectView(R.id.action_fab_goto_page)
-//    FloatingActionButton actionFabGotoPage;
+    @InjectView(R.id.action_fab_quick_reply)
+    FloatingActionButton actionFabQuickReply;
+    @InjectView(R.id.action_fab_goto_page)
+    FloatingActionButton actionFabGotoPage;
     @InjectView(R.id.fam_actions)
     FloatingActionMenu famActions;
     @InjectView(R.id.action_fab_refresh)
@@ -177,33 +180,37 @@ public class ForumDetailFragment extends BaseFragment implements SwipeRefreshLay
             }
         });
 
-//        actionFabQuickReply.setImageDrawable(new IconicsDrawable(getActivity(), GoogleMaterial.Icon.gmd_reply).color(Color.WHITE));
-//        actionFabQuickReply.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                famActions.close(false);
-//                famActions.setVisibility(View.INVISIBLE);
-//                quickReply.setVisibility(View.VISIBLE);
-//                actionFabQuickReply.setVisibility(View.VISIBLE);
-//                actionFabQuickReply.bringToFront();
-//                (new Handler()).postDelayed(new Runnable() {
-//                    public void run() {
-//                        tvReplyText.requestFocus();
-//                        tvReplyText.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_DOWN, 0, 0, 0));
-//                        tvReplyText.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_UP, 0, 0, 0));
-//                    }
-//                }, 200);
-//            }
-//        });
-//
-//        actionFabGotoPage.setImageDrawable(new IconicsDrawable(getActivity(), GoogleMaterial.Icon.gmd_swap_horiz).color(Color.WHITE));
-//        actionFabGotoPage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                famActions.close(true);
-////                showGotoPageDialog();
-//            }
-//        });
+        actionFabQuickReply.setImageDrawable(new IconicsDrawable(getActivity(), GoogleMaterial.Icon.gmd_reply).color(Color.WHITE));
+        actionFabQuickReply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                famActions.close(false);
+                famActions.setVisibility(View.INVISIBLE);
+                quickReply.setVisibility(View.VISIBLE);
+                actionFabQuickReply.setVisibility(View.VISIBLE);
+                actionFabQuickReply.bringToFront();
+                (new Handler()).postDelayed(new Runnable() {
+                    public void run() {
+                        tvReplyText.requestFocus();
+                        tvReplyText.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_DOWN, 0, 0, 0));
+                        tvReplyText.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_UP, 0, 0, 0));
+                    }
+                }, 200);
+            }
+        });
+
+        actionFabGotoPage.setImageDrawable(new IconicsDrawable(getActivity(), GoogleMaterial.Icon.gmd_swap_horiz).color(Color.WHITE));
+        actionFabGotoPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                famActions.close(true);
+                showGotoPageDialog();
+            }
+        });
+
+    }
+
+    private void showGotoPageDialog() {
 
     }
 
