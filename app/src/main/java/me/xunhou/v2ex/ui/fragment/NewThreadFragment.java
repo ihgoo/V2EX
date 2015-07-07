@@ -1,4 +1,4 @@
-package me.xunhou.v2ex.ui;
+package me.xunhou.v2ex.ui.fragment;
 
 import android.app.Fragment;
 import android.os.Bundle;

@@ -1,4 +1,4 @@
-package me.xunhou.v2ex.ui;
+package me.xunhou.v2ex.ui.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.CardView;

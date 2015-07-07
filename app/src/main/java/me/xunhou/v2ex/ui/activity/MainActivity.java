@@ -1,4 +1,4 @@
-package me.xunhou.v2ex.ui;
+package me.xunhou.v2ex.ui.activity;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -30,6 +30,8 @@ import java.util.ArrayList;
 import butterknife.ButterKnife;
 import me.xunhou.v2ex.R;
 import me.xunhou.v2ex.persistence.IntentConstant;
+import me.xunhou.v2ex.ui.OnSwipeTouchListener;
+import me.xunhou.v2ex.ui.fragment.ForumListFragment;
 
 /**
  * Created by ihgoo on 2015/5/18.
@@ -39,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private AccountHeader headerResult;
     private int mQuit = 0;
     private OnSwipeTouchListener mSwipeListener;
-    Drawer drawerResult;
+    public Drawer drawerResult;
 
     private final int DRAWER_POSITION_PROGRAMMER = 0;
     private final int DRAWER_POSITION_CREATE = 1;

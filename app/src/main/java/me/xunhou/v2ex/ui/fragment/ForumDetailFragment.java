@@ -1,4 +1,4 @@
-package me.xunhou.v2ex.ui;
+package me.xunhou.v2ex.ui.fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -36,6 +36,8 @@ import me.xunhou.v2ex.model.ReplyBean;
 import me.xunhou.v2ex.model.TopicBean;
 import me.xunhou.v2ex.model.V2EXSettingHelper;
 import me.xunhou.v2ex.persistence.IntentConstant;
+import me.xunhou.v2ex.ui.BaseFragment;
+import me.xunhou.v2ex.ui.adapter.ForumDetailAdapter;
 import me.xunhou.v2ex.utils.BusProvider;
 import me.xunhou.v2ex.utils.ToastUtil;
 

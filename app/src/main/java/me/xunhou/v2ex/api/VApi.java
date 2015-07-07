@@ -14,12 +14,8 @@ import retrofit.http.Query;
  * Created by ihgoo on 2015/5/18.
  */
 public interface VApi {
-    //http://v2ex.com/bb?p=2
     @GET("/go/{node}")
     void getTopicsList(@Query("p") int page, @Path("node") String node, Callback<Response> callback);
-
-//    @GET("/")
-//    void getTopicsListByTab(@Query("tab") String tab,Callback<Response> callback);
 
     @GET("/t/{tid}")
     void getForumDetail(@Path("tid") String tid, Callback<Response> callback);

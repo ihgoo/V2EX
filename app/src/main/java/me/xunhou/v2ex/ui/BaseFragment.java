@@ -11,6 +11,8 @@ import android.view.View;
 
 import com.mikepenz.materialdrawer.Drawer;
 
+import me.xunhou.v2ex.ui.activity.MainActivity;
+
 /**
  * Created by ihgoo on 2015/5/21.
  */
@@ -31,7 +33,7 @@ public class BaseFragment extends Fragment {
 
 
 
-    void setActionBarTitle(CharSequence title) {
+    public void setActionBarTitle(CharSequence title) {
         if (getActivity() != null) {
             ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
             if (actionBar != null)
@@ -39,7 +41,7 @@ public class BaseFragment extends Fragment {
         }
     }
 
-    void setActionBarTitle(@StringRes int resId) {
+    public void setActionBarTitle(@StringRes int resId) {
         if (getActivity() != null) {
             ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
             if (actionBar != null)
@@ -48,7 +50,7 @@ public class BaseFragment extends Fragment {
     }
 
 
-    void syncActionBarState() {
+    public void syncActionBarState() {
         if (getActivity() != null) {
             Drawer drawerResult = ((MainActivity) getActivity()).drawerResult;
             if (drawerResult != null)
@@ -56,7 +58,7 @@ public class BaseFragment extends Fragment {
         }
     }
 
-    void setDrawerSelection(int identifier) {
+    public void setDrawerSelection(int identifier) {
         //this only set DrawerItem, not StickyDrawerItem
         try {
             if (getActivity() != null) {
