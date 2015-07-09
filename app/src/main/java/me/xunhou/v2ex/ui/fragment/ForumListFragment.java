@@ -3,6 +3,7 @@ package me.xunhou.v2ex.ui.fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -33,6 +34,7 @@ import me.xunhou.v2ex.core.FourmList;
 import me.xunhou.v2ex.model.ForumItemBean;
 import me.xunhou.v2ex.persistence.IntentConstant;
 import me.xunhou.v2ex.ui.BaseFragment;
+import me.xunhou.v2ex.ui.LoginDialog;
 import me.xunhou.v2ex.ui.adapter.ForumListAdapter;
 import me.xunhou.v2ex.utils.BusProvider;
 import me.xunhou.v2ex.utils.ToastUtil;
@@ -160,6 +162,9 @@ public class ForumListFragment extends BaseFragment implements SwipeRefreshLayou
     }
 
     private void newThread() {
+        LoginDialog loginDialog = new LoginDialog(getActivity());
+        loginDialog.setHander(new Handler());
+        loginDialog.show();
     }
 
     @Subscribe

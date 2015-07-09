@@ -1,6 +1,10 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
 android {
     compileSdkVersion 21
     buildToolsVersion "21.1.2"

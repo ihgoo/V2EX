@@ -46,9 +46,6 @@ public class Clenit {
 
 //        Login login = new Login();
 //        login.getOnce();
-
-
-
 //        vApi.getOnce(new Callback<Response>() {
 //            @Override
 //            public void success(Response res, Response response) {
