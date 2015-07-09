@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -24,6 +25,7 @@ import com.mikepenz.materialdrawer.accountswitcher.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
 import java.util.ArrayList;
 
@@ -59,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.acitivity_main_page);
         ButterKnife.inject(this);
 
-        setupDrawer();
+        setupDrawer(savedInstanceState);
 
         mSwipeListener = new OnSwipeTouchListener(this) {
             public void onSwipeRight() {
@@ -83,19 +85,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void setupDrawer() {
+    private void setupDrawer(Bundle savedInstanceState) {
         Toolbar toolbar = (Toolbar) findViewById(R.id.activity_main_toolbar);
         setSupportActionBar(toolbar);
 
 
+        final IProfile profile = new ProfileDrawerItem().withName("Mike Penz").withEmail("mikepenz@gmail.com").withIcon("https://avatars3.githubusercontent.com/u/1476232?v=3&s=460");
+
+
         headerResult = new AccountHeaderBuilder()
+
                 .withActivity(this)
                 .withHeaderBackground(R.drawable.header)
                 .withCompactStyle(true)
                 .withSelectionListEnabled(false)
-                .addProfiles(new ProfileDrawerItem()
-                        .withName("xunhou")
-                        .withIcon("http://v1.qzone.cc/avatar/201305/17/22/59/519645d5ed855399.jpg!200x200.jpg"))
+                .addProfiles(profile)
+                .withSavedInstance(savedInstanceState)
                 .build();
 
 
@@ -117,6 +122,8 @@ public class MainActivity extends AppCompatActivity {
                 .withAccountHeader(headerResult)
                 .withTranslucentStatusBar(true)
                 .withDrawerItems(drawerItems)
+                .withSavedInstance(savedInstanceState)
+                .withShowDrawerOnFirstLaunch(true)
                 .withOnDrawerItemClickListener(new DrawerItemClickListener())
                 .build();
 
@@ -134,6 +141,11 @@ public class MainActivity extends AppCompatActivity {
                 popFragment(false);
             }
         });
+
+        if (savedInstanceState == null) {
+            // set the selection to the item with the identifier 10
+            drawerResult.setSelectionByIdentifier(10, false);
+        }
 
     }
 
@@ -175,8 +187,14 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (!popFragment(true)) {
             mQuit++;
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mQuit = 1;
+                }
+            },5000);
             if (mQuit == 1) {
-                Toast.makeText(this, "再按一次退出V2EX", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.exit_app, Toast.LENGTH_LONG).show();
             } else {
                 finish();
             }

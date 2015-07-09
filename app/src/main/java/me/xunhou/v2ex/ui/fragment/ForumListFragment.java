@@ -107,7 +107,6 @@ public class ForumListFragment extends BaseFragment implements SwipeRefreshLayou
                 swipeContainer.setRefreshing(true);
             }
         });
-
         mFourmList = new FourmList();
         mFourmList.getTopicsList(page, mNode);
     }
@@ -125,7 +124,6 @@ public class ForumListFragment extends BaseFragment implements SwipeRefreshLayou
         swipeContainer.setColorSchemeResources(R.color.colorPrimary);
         lv.setOnScrollListener(this);
         lv.setOnItemClickListener(this);
-
 
         actionFabNewThread.setImageDrawable(new IconicsDrawable(getActivity(), GoogleMaterial.Icon.gmd_create).color(Color.WHITE));
         actionFabNewThread.setOnClickListener(new View.OnClickListener() {
@@ -162,11 +160,6 @@ public class ForumListFragment extends BaseFragment implements SwipeRefreshLayou
     }
 
     private void newThread() {
-        NewThreadFragment newThreadFragment = new NewThreadFragment();
-        getFragmentManager().beginTransaction()
-                .replace(R.id.main_frame_container, newThreadFragment, NewThreadFragment.class.getName())
-                .addToBackStack(NewThreadFragment.class.getName())
-                .commit();
     }
 
     @Subscribe

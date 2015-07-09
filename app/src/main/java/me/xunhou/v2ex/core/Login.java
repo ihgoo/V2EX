@@ -11,8 +11,6 @@ import me.xunhou.v2ex.client.Clenit;
 import me.xunhou.v2ex.model.V2EXSettingHelper;
 import me.xunhou.v2ex.utils.StringUtil;
 import me.xunhou.v2ex.utils.V2EXPaser;
-import retrofit.Callback;
-import retrofit.RetrofitError;
 import retrofit.client.Header;
 import retrofit.client.Response;
 
@@ -21,79 +19,64 @@ import retrofit.client.Response;
  */
 public class Login {
 
-    private VApi api ;
+    private VApi api;
     private Handler mHandler;
 
-    public Login(Handler handler){
+    public Login(Handler handler) {
         api = Clenit.getServiceClient();
         mHandler = handler;
     }
 
-    public void getOnce(){
-        api.getOnce(new Callback<Response>() {
-            @Override
-            public void success(Response res, Response response2) {
-                try {
-                    InputStream in = res.getBody().in();
-                    String responseString = StringUtil.inputStream2String(in);
-                    String once = V2EXPaser.paserOnce(responseString);
-                    mHandler.sendEmptyMessage(0);
-
-                    login("", "", once);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-
+    public void getOnce() {
+        api.getOnce().subscribe(response -> {
+            try {
+                InputStream in = response.getBody().in();
+                String responseString = StringUtil.inputStream2String(in);
+                String once = V2EXPaser.paserOnce(responseString);
+                mHandler.sendEmptyMessage(0);
+                login("", "", once);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         });
     }
 
 
-    public void login(final String username,String password,String once){
-        api.login("%2F",username,password,once,new Callback<Response>() {
-            @Override
-            public void success(Response res, Response response) {
-                try {
-                    InputStream in = res.getBody().in();
-                    String responseString = StringUtil.inputStream2String(in);
+    public void login(final String username, String password, String once) {
+        api.login("%2F", username, password, once)
+                .subscribe(response -> handleLogin(response, username));
+    }
 
-                    String cookie  = null;
-                    for (Header header : response.getHeaders()) {
-                        if (header.getName().equalsIgnoreCase("set-cookie")
-                                && header.getValue().toLowerCase().contains("pb3_session") ){
-                            Log.e("pb3_session","pb3_session is "+header.getValue());
+    private void handleLogin(Response response, String username) {
+        try {
+            InputStream in = response.getBody().in();
+            String responseString = StringUtil.inputStream2String(in);
+            String cookie = null;
+            for (Header header : response.getHeaders()) {
+                if (header.getName().equalsIgnoreCase("set-cookie")
+                        && header.getValue().toLowerCase().contains("pb3_session")) {
+                    Log.e("pb3_session", "pb3_session is " + header.getValue());
 
-                            cookie = header.getValue();
-                            V2EXSettingHelper.getInstance().setSession(header.getValue());
-                            V2EXSettingHelper.getInstance().setUsername(username);
-//                            mHandler.sendEmptyMessage(1);
-                            break;
-                        }
-                        if (header.getName().equalsIgnoreCase("set-cookie")
-                                && header.getValue().toLowerCase().contains("a2") ){
-                            Log.e("a2","a2 is "+header.getValue());
+                    cookie = header.getValue();
+                    V2EXSettingHelper.getInstance().setSession(header.getValue());
+                    V2EXSettingHelper.getInstance().setUsername(username);
+//                  mHandler.sendEmptyMessage(1);
+                    break;
+                }
+                if (header.getName().equalsIgnoreCase("set-cookie")
+                        && header.getValue().toLowerCase().contains("a2")) {
+                    Log.e("a2", "a2 is " + header.getValue());
 
 
-                            V2EXSettingHelper.getInstance().setA2(header.getValue());
-                            V2EXSettingHelper.getInstance().setUsername(username);
-//                            mHandler.sendEmptyMessage(1);
-                        }
-                    }
-
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    V2EXSettingHelper.getInstance().setA2(header.getValue());
+                    V2EXSettingHelper.getInstance().setUsername(username);
+//                  mHandler.sendEmptyMessage(1);
                 }
             }
 
-            @Override
-            public void failure(RetrofitError error) {
-
-            }
-        });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
