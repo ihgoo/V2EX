@@ -103,14 +103,16 @@ public class ForumListFragment extends BaseFragment implements SwipeRefreshLayou
         super.onActivityCreated(savedInstanceState);
         BusProvider.register(this);
         isLoading = false;
-        swipeContainer.post(new Runnable() {
-            @Override
-            public void run() {
-                swipeContainer.setRefreshing(true);
-            }
-        });
         mFourmList = new FourmList();
-        mFourmList.getTopicsList(page, mNode);
+        if (mList.size()==0){
+            swipeContainer.post(new Runnable() {
+                @Override
+                public void run() {
+                    swipeContainer.setRefreshing(true);
+                }
+            });
+            mFourmList.getTopicsList(page, mNode);
+        }
     }
 
     @Override
@@ -162,7 +164,7 @@ public class ForumListFragment extends BaseFragment implements SwipeRefreshLayou
     }
 
     private void newThread() {
-        LoginDialog loginDialog = new LoginDialog(getActivity());
+        LoginDialog loginDialog = new LoginDialog(getActivity(),R.style.MyDialogStyle);
         loginDialog.setHander(new Handler());
         loginDialog.show();
     }
