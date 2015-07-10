@@ -8,4 +8,5 @@
 */.idea/
 .idea/**/*
 app/app.iml
-*/build
+*/build/
+V2EX.iml
