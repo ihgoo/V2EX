@@ -1,7 +1,6 @@
 package me.xunhou.v2ex.core;
 
 import android.os.Handler;
-import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,8 +10,8 @@ import me.xunhou.v2ex.client.Clenit;
 import me.xunhou.v2ex.model.V2EXSettingHelper;
 import me.xunhou.v2ex.utils.StringUtil;
 import me.xunhou.v2ex.utils.V2EXPaser;
-import retrofit.client.Header;
 import retrofit.client.Response;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by ihgoo on 2015/5/25.
@@ -27,23 +26,26 @@ public class Login {
         mHandler = handler;
     }
 
-    public void getOnce() {
-        api.getOnce().subscribe(response -> {
-            try {
-                InputStream in = response.getBody().in();
-                String responseString = StringUtil.inputStream2String(in);
-                String once = V2EXPaser.paserOnce(responseString);
-                mHandler.sendEmptyMessage(0);
-                login("", "", once);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+    public void login(final String username, final String password) {
+        api.getOnce()
+                .subscribeOn(Schedulers.io())
+                .subscribe(response -> {
+                    try {
+                        InputStream in = response.getBody().in();
+                        String responseString = StringUtil.inputStream2String(in);
+                        String once = V2EXPaser.paserOnce(responseString);
+                        mHandler.sendEmptyMessage(0);
+                        loginWithOnce(username, password, once);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
     }
 
 
-    public void login(final String username, String password, String once) {
-        api.login("%2F", username, password, once)
+    public void loginWithOnce(final String username, final String password, String once) {
+        api.login("/", username, password, once)
+                .subscribeOn(Schedulers.io())
                 .subscribe(response -> handleLogin(response, username));
     }
 
@@ -51,29 +53,7 @@ public class Login {
         try {
             InputStream in = response.getBody().in();
             String responseString = StringUtil.inputStream2String(in);
-            String cookie = null;
-            for (Header header : response.getHeaders()) {
-                if (header.getName().equalsIgnoreCase("set-cookie")
-                        && header.getValue().toLowerCase().contains("pb3_session")) {
-                    Log.e("pb3_session", "pb3_session is " + header.getValue());
-
-                    cookie = header.getValue();
-                    V2EXSettingHelper.getInstance().setSession(header.getValue());
-                    V2EXSettingHelper.getInstance().setUsername(username);
-//                  mHandler.sendEmptyMessage(1);
-                    break;
-                }
-                if (header.getName().equalsIgnoreCase("set-cookie")
-                        && header.getValue().toLowerCase().contains("a2")) {
-                    Log.e("a2", "a2 is " + header.getValue());
-
-
-                    V2EXSettingHelper.getInstance().setA2(header.getValue());
-                    V2EXSettingHelper.getInstance().setUsername(username);
-//                  mHandler.sendEmptyMessage(1);
-                }
-            }
-
+            V2EXSettingHelper.getInstance().setUsername(username);
         } catch (IOException e) {
             e.printStackTrace();
         }

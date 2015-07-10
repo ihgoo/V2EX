@@ -1,9 +1,11 @@
 package me.xunhou.v2ex.ui;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -35,13 +37,18 @@ public class LoginDialog extends Dialog {
     private Handler mHandler;
 
 
-    public void setHander(Handler hander){
+    public void setHander(Handler hander) {
         mHandler = hander;
         login = new Login(mHandler);
     }
 
     public LoginDialog(Context context) {
         super(context);
+        mContext = context;
+    }
+
+    public LoginDialog(Context context, int theme) {
+        super(context, theme);
         mContext = context;
     }
 
@@ -63,14 +70,26 @@ public class LoginDialog extends Dialog {
     }
 
     @OnClick(R.id.login_btn)
-    void login(){
-        login.getOnce();
+    void login() {
+        String username = loginUsername.getText().toString().trim();
+        String password = loginPassword.getText().toString().trim();
+
+        if (!TextUtils.isEmpty(username)&& !TextUtils.isEmpty(password)){
+            login.login(username,password);
+        }else {
+            ToastUtil.showShortTime(mContext,"帐号和密码不能为空");
+        }
+
     }
 
 
+    ProgressDialog mProgressDialog;
+
     @Subscribe
-    public void show(NoticeBean noticeBean){
-        ToastUtil.showMediumTime(mContext,noticeBean.getContent());
+    public void show(NoticeBean noticeBean) {
+        ToastUtil.showMediumTime(mContext, noticeBean.getContent());
+
+
     }
 
 }

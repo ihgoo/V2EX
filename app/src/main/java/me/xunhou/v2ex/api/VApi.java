@@ -4,6 +4,7 @@ import retrofit.client.Response;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
+import retrofit.http.Headers;
 import retrofit.http.POST;
 import retrofit.http.Path;
 import retrofit.http.Query;
@@ -25,9 +26,12 @@ public interface VApi {
     @GET("/signin")
     Observable<Response> getOnce();
 
+    @Headers({
+            "Referer: http://www.v2ex.com/signin",
+    })
     @FormUrlEncoded
     @POST("/signin")
-    Observable<Response> login(@Field("next") String next, @Field("u") String username, @Field("password") String password, @Field("once") String once);
+    Observable<Response> login(@Field("next") String next, @Field("u") String username, @Field("p") String password, @Field("once") String once);
 
     @FormUrlEncoded
     @POST("/new")
