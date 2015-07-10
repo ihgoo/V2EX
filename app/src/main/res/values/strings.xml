@@ -21,7 +21,8 @@
     <string name="title_drawer_ideas">奇思妙想</string>
     <string name="title_drawer_qna">问与答</string>
 
-    <string name="pref_title_username">用户名</string>
+    <string name="pref_title_username">请输入帐号...</string>
+    <string name="pref_title_password">请输入密码...</string>
 
 
 

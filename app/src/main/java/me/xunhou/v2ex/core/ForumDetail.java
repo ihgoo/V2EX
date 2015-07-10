@@ -15,6 +15,7 @@ import me.xunhou.v2ex.utils.BusProvider;
 import me.xunhou.v2ex.utils.StringUtil;
 import me.xunhou.v2ex.utils.V2EXPaser;
 import retrofit.client.Response;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by ihgoo on 2015/5/21.
@@ -31,6 +32,7 @@ public class ForumDetail extends CancelQueue {
 
     public void getForumDetail(String tid) {
         mVApi.getForumDetail(tid)
+                .subscribeOn(Schedulers.computation())
                 .subscribe(response -> handleForumDetail(response), error -> handleFailure(error));
     }
 

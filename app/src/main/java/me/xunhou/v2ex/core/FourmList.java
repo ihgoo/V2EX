@@ -13,6 +13,7 @@ import me.xunhou.v2ex.utils.BusProvider;
 import me.xunhou.v2ex.utils.StringUtil;
 import me.xunhou.v2ex.utils.V2EXPaser;
 import retrofit.client.Response;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by ihgoo on 2015/5/19.
@@ -29,6 +30,7 @@ public class FourmList extends CancelQueue {
 
     public void getTopicsList(int page, String node) {
         mVApi.getTopicsList(page, node)
+                .subscribeOn(Schedulers.computation())
                 .subscribe(response -> handleTopicsList(response), error -> handleFailure(error));
     }
 

@@ -150,6 +150,7 @@ public class ForumDetailFragment extends BaseFragment implements SwipeRefreshLay
 
     @Subscribe
     public void handleMessage(Message message) {
+        swipeContainer.setRefreshing(false);
         ToastUtil.showLongTime(getActivity(), getResources().getString(message.getReason()));
         switch (message.getWhat()) {
             case Constant.RESONSE_NEED_LOGIN:

@@ -90,11 +90,10 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-        final IProfile profile = new ProfileDrawerItem().withName("Mike Penz").withEmail("mikepenz@gmail.com").withIcon("https://avatars3.githubusercontent.com/u/1476232?v=3&s=460");
+        final IProfile profile = new ProfileDrawerItem().withIcon("https://avatars3.githubusercontent.com/u/1476232?v=3&s=460");
 
 
         headerResult = new AccountHeaderBuilder()
-
                 .withActivity(this)
                 .withHeaderBackground(R.drawable.header)
                 .withCompactStyle(true)
@@ -284,7 +283,7 @@ public class MainActivity extends AppCompatActivity {
                             .commit();
                     break;
                 case DRAWER_POSITION_QNA:
-                    bundle.putString(IntentConstant.NODE, "qna");
+                    bundle.putString(IntentConstant.NODE, "all4all");
                     fragment.setArguments(bundle);
                     getFragmentManager().beginTransaction()
                             .replace(R.id.main_frame_container, fragment, ForumListFragment.class.getName())
